@@ -1,222 +1,32 @@
-import { useEffect, useState } from "react";
-import { Fade } from "react-awesome-reveal";
-import { useNavigate } from "react-router-dom";
-import Bemvindos from "../../assets/images/bem-vindos.png";
-import Buildurpc from "../../assets/images/BuildUrPC.png";
-import difofguas from "../../assets/images/diffofgaussian.png";
-import docscanner from "../../assets/images/docscanner.png";
-import Dreamscape from "../../assets/images/Dreamscapelogo.png";
-import edgedet from "../../assets/images/edgedetection.png";
-import focussync from "../../assets/images/FocusSync.png";
-import fpt from "../../assets/images/fourpointtransformdewarp.png";
-import qrover from "../../assets/images/QRover.png";
-import TanukiHunt from "../../assets/images/TanukiHunt.png";
-
-import pcbuildervideo from "../../assets/videos/FinalProjectVideoDemo.mp4";
-
-import { FaGithub } from "react-icons/fa";
+// Projects.jsx — split browser (direction 2a)
 import "./Projects.css";
 
-const projectData = [
-  {
-    id: 1,
-    name: "Tanuki Hunt: Swiped Spritis",
-    description:
-      "A stealth platformer made in Unity for the Ludem Dare 56 game jam",
-    url: "https://lunaruu.itch.io/tanuki-hunt-stolen",
-    images: [TanukiHunt, TanukiHunt],
-    githuburl: "https://github.com/AlmityTuhm/LudumDare56",
-  },
-  {
-    id: 2,
-    name: "PC Builder Simulator",
-    description:
-      "A qt app created in c++ as a final project for my Software Development 2 class that utilizes box2d physics. Note: The repo is private. If you want to see more about this project, check out the video attached below",
-    url: "https://github.com/ZeroTheNerd/pc_builder_simulator",
-    images: [Buildurpc],
-    githuburl: "https://github.com/ZeroTheNerd/pc_builder_simulator",
-    video: pcbuildervideo,
-  },
-  {
-    id: 3,
-    name: "Dream Scape",
-    description:
-      "An FPS shooter that I developed with a few other engineers for one of my Universities game jams. Note: The github link is a copy I made which does not hold all the commits. It was a copy I created so that the repo is public. The original repo has 186 commits",
-    url: "https://almitytuhm.itch.io/dream-scape",
-    images: [Dreamscape, Dreamscape],
-    githuburl: "https://github.com/ZeroTheNerd/dream_scape",
-  },
-  {
-    id: 4,
-    name: "Portuguese Portfolio",
-    description:
-      "I was encouraged to make a portfolio website for my journey learning Portuguese so I created a locally hosted website using bootstrap. This project is not the most technical and was very easy to set up but I am adding it here as it is a reminder of where I started. It also gives people more of an idea of who I am. I love the portuguese language and have always strived to become fluent. Its a language outside of coding that I still study to this day. Both of my parents speak portuguese and it is my dads mother tounge. If you would like to like to see more of the webite, feel free to clone the repo. Check out the README for further information",
-    url: "https://github.com/ZeroTheNerd/portuguese_portfolio",
-    images: [Bemvindos, Bemvindos],
-    githuburl: "https://github.com/ZachMartim/zachportfolio.github.io",
-  },
-  {
-    id: 5,
-    name: "Pomodoro",
-    description:
-      "Utilizing React, Node.js for the frontend and AWS AppSync along with GraphQl for the backend. Note: This is still a work in progress and the repo is private",
-    url: "",
-    images: [focussync, focussync],
-    githuburl: "https://github.com/jelston11/pmdo_frontend",
-  },
-  // {
-  //   id: 6,
-  //   name: 'OuttaTime',
-  //   description: 'Another React, Node.js alongside AWS services application. Built to proactively supports drivers in finding balance, health, and enjoyment on the road—all while keeping them and their fleets compliant and safe',
-  //   url: '',
-  //   images: [],
-  //   githuburl: 'https://github.com/jelston11/pmdo_frontend'
-  // }
-  {
-    id: 7,
-    name: "Autoscanner",
-    description:
-      "Allows you to scan book pages using a mobile camera. Involves detecting and isolating the page area, flattening curled pages, pre-processing for OCR(Optical Character Recognition), and implementing an OCR pipeline to extract searchable text",
-    url: "https://github.com/ZeroTheNerd/auto_scanner",
-    images: [docscanner, edgedet, difofguas, fpt],
-    modalTextBlocks: [
-      "Detecting and isolating the page area.",
-      "Flattening curled pages using advanced algorithms.",
-      "OCR pipeline extracts searchable text from each image.",
-    ],
-    githuburl: "https://github.com/ZeroTheNerd/auto_scanner",
-  },
-  {
-    id: 8,
-    name: "Rover-Q",
-    description:
-      "Uses Q-learning Reinforcement Learning to allow a Mars rover to find the best path from a start location to a target location through rough terrain modeled in a 3D Mars-like landscape powered by Three.js",
-    url: "https://github.com/ZeroTheNerd/CrimsonHacksFinal",
-    images: [qrover, qrover],
-    githuburl: "https://github.com/ZeroTheNerd/CrimsonHacksFinal",
-  },
-];
-
 const Projects = () => {
-  const navigate = useNavigate();
-  const [projects, setProjects] = useState([]);
-  const [selected, setSelected] = useState(null);
-
-  useEffect(() => {
-    // Fetch the project data from backend API (Can find it server.js)
-    fetch("/api/projects")
-      .then((res) => res.json())
-      .then((data) => setProjects(data))
-      .catch((err) => console.error("Error fetching projects:", err));
-  }, []);
-
   return (
-    <div className="projects-container">
-      <h2 className="projects-header">
-        <span className="accent">Projects</span> I've built.
-        <br />
-        <span style={{ fontWeight: 400, fontSize: "1.18rem" }}>
-          Note: Some of the github links are to private repositories.
-        </span>
-      </h2>
-      <Fade cascade damping={0.14} triggerOnce>
-        <div className="projects-grid">
-          {projectData.map((project) => (
-            <div
-              className="project-card"
-              key={project.id}
-              onClick={() => setSelected(project)}
-            >
-              <img
-                src={project.images[0]}
-                alt={project.name}
-                className="project-image"
-              />
-              <div className="project-title">{project.name}</div>
-            </div>
-          ))}
-        </div>
-      </Fade>
-
-      {selected && (
-        <div className="modal-overlay" onClick={() => setSelected(null)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <span className="modal-close" onClick={() => setSelected(null)}>
-              &times;
-            </span>
-            <h3 className="modal-name">{selected.name}</h3>
-            <p className="modal-description">{selected.description}</p>
-            {/* <div className="modal-image-center">
-              {selected.images[1] && (
-                <a
-                  href={selected.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <div className="modal-image-wrapper">
-                    <img
-                      src={selected.images[1]}
-                      alt={`${selected.name} screenshot 1`}
-                      className="modal-image"
-                    />
-                  </div>
-                </a>
-              )}
-            </div> */}
-            <div className="modal-image-center">
-              {selected.images &&
-                selected.images.slice(1).map((img, idx) => (
-                  <div key={idx} style={{ marginBottom: "30px" }}>
-                    <a
-                      href={selected.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ display: "block", margin: "0 auto" }}
-                    >
-                      <div className="modal-image-wrapper">
-                        <img
-                          src={img}
-                          alt={`${selected.name} screenshot ${idx + 1}`}
-                          className="modal-image"
-                        />
-                      </div>
-                    </a>
-                    {selected.modalTextBlocks &&
-                      selected.modalTextBlocks[idx] && (
-                        <div
-                          style={{
-                            margin: "16px 0",
-                            color: "#229252",
-                            fontSize: "1.08em",
-                            textAlign: "center",
-                          }}
-                        >
-                          {selected.modalTextBlocks[idx]}
-                        </div>
-                      )}
-                  </div>
-                ))}
-            </div>
-
-            {/* {selected.video && selected.video.includes("youtube") && (
-              <iframe
-                width="100%"
-                height="315"
-                src={selected.video}
-                title="Project video"
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-              ></iframe>
-            )} */}
-            {selected.video && selected.video.endsWith(".mp4") && (
-              <video src={selected.video} controls width="100%" />
-            )}
-            <a className="modal-github" href={selected.githuburl}>
-              <FaGithub />
-            </a>
+    <div className="projects">
+      <div className="term-window">
+        <header className="term-header">
+          <div className="term-dots" aria-hidden="true">
+            <span className="dot red" />
+            <span className="dot yellow" />
+            <span className="dot green" />
           </div>
+          <span className="term-title">zach@portfolio — ~/projects</span>
+        </header>
+
+        {/* ---- page intro ---- */}
+        <div className="projects-intro">
+          <p className="prompt">
+            <span className="prompt-sigil">$</span> ls ~/projects --sort=recent
+          </p>
+          <h1 className="projects-title">Things I've built</h1>
+          <p className="projects-lede">
+            Coursework, capstone, hackathon weekends and game jams. A few repos
+            are private — those are marked, and there's usually a demo video
+            instead.
+          </p>
         </div>
-      )}
+      </div>
     </div>
   );
 };
