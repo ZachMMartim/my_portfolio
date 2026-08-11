@@ -198,3 +198,83 @@
   color: var(--l-accent);
   border-color: var(--l-accent);
 }
+
+/* ---------- identity card ---------- */
+.id-card {
+  width: 300px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 26px;
+  background: var(--l-surface-2);
+  border: 1px solid var(--l-line);
+  border-radius: 10px;
+}
+
+.id-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--l-line-2);
+}
+
+.id-meta {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.id-meta > div {
+  display: flex;
+  gap: 8px;
+}
+
+.id-meta dt {
+  width: 62px;
+  flex-shrink: 0;
+  color: var(--l-dim);
+}
+
+.id-meta dd {
+  margin: 0;
+  color: #cfd6d1;
+}
+
+.id-meta .accent {
+  color: var(--l-accent);
+}
+
+.id-rule {
+  height: 1px;
+  background: var(--l-line);
+}
+
+.id-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.id-links a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  color: var(--l-text-2);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.id-links a:hover {
+  color: var(--l-accent);
+}

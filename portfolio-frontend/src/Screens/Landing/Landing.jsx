@@ -1,5 +1,8 @@
 // Landing.jsx — terminal-first front page (direction 1b)
 import { useEffect, useRef, useState } from "react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+import linkedinpfp from "../../assets/images/linkedinpfp.png";
 import "./Landing.css";
 
 const TAGLINE = "software engineer — production systems, end to end";
@@ -88,6 +91,62 @@ const Landing = () => {
                 </button>
               </div>
             </div>
+
+            <aside className="id-card">
+              <img
+                src={linkedinpfp}
+                alt="Zach Martim"
+                className="id-photo"
+                loading="lazy"
+              />
+              <dl className="id-meta">
+                <div>
+                  <dt>loc</dt>
+                  <dd>Salt Lake City, UT</dd>
+                </div>
+                <div>
+                  <dt>edu</dt>
+                  <dd>
+                    U of U — CS, AI/ML
+                    <br />
+                    GPA 3.6 · Dec 2026
+                  </dd>
+                </div>
+                <div>
+                  <dt>status</dt>
+                  <dd className="accent">open to new-grad SWE</dd>
+                </div>
+              </dl>
+              <div className="id-rule" />
+              <ul className="id-links">
+                <li>
+                  <a
+                    href="https://www.linkedin.com/in/zachmartim"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaLinkedin aria-hidden="true" />
+                    linkedin.com/in/zachmartim
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ZeroTheNerd"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaGithub aria-hidden="true" />
+                    github.com/ZeroTheNerd
+                  </a>
+                </li>
+                <li>
+                  <a href="mailto:zachmartim101@gmail.com">
+                    <MdEmail aria-hidden="true" />
+                    zachmartim101@gmail.com
+                  </a>
+                </li>
+              </ul>
+            </aside>
           </section>
         </div>
       </div>
