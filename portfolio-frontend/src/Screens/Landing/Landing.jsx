@@ -1,5 +1,6 @@
 // Landing.jsx — terminal-first front page (direction 1b)
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import linkedinpfp from "../../assets/images/linkedinpfp.png";
@@ -52,6 +53,7 @@ const PROJECTS = [
 ];
 
 const Landing = () => {
+  const navigate = useNavigate();
   const [typed, setTyped] = useState("");
   const timers = useRef([]);
 
@@ -103,6 +105,39 @@ const Landing = () => {
             <span className="dot green" />
           </div>
           <span className="term-title">zach@portfolio — zsh</span>
+          <nav className="term-nav">
+            <button className="term-nav-link is-active" type="button">
+              home
+            </button>
+            <button
+              className="term-nav-link"
+              type="button"
+              onClick={() => navigate("/projects")}
+            >
+              projects
+            </button>
+            <button
+              className="term-nav-link"
+              type="button"
+              onClick={() => navigate("/DigitalResume")}
+            >
+              resume
+            </button>
+            <button
+              className="term-nav-link"
+              type="button"
+              onClick={() => navigate("/Skills")}
+            >
+              skills
+            </button>
+            <button
+              className="term-nav-link"
+              type="button"
+              onClick={() => navigate("/Extra")}
+            >
+              extras
+            </button>
+          </nav>
         </header>
 
         <div className="term-body">
@@ -132,6 +167,13 @@ const Landing = () => {
                   onClick={handleDownloadResume}
                 >
                   ./resume.pdf
+                </button>
+                <button
+                  className="btn btn-ghost"
+                  type="button"
+                  onClick={() => navigate("/projects")}
+                >
+                  cd projects/
                 </button>
               </div>
             </div>
@@ -228,6 +270,13 @@ const Landing = () => {
                 </li>
               ))}
             </ul>
+            <button
+              className="btn btn-ghost proj-all"
+              type="button"
+              onClick={() => navigate("/projects")}
+            >
+              see all projects →
+            </button>
           </section>
         </div>
       </div>
