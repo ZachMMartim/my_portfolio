@@ -197,8 +197,7 @@ const PROJECTS = [
     tags: ["Bootstrap", "HTML", "CSS"],
     groups: ["web"],
     images: [Bemvindos],
-    url: "https://github.com/ZeroTheNerd/portuguese_portfolio",
-    githuburl: "https://github.com/ZachMartim/zachportfolio.github.io",
+    githuburl: "https://github.com/ZeroTheNerd/portuguese_portfolio",
   },
 ];
 
