@@ -11,7 +11,10 @@ import edgedet from "../../assets/images/edgedetection.png";
 import focussync from "../../assets/images/FocusSync.png";
 import fpt from "../../assets/images/fourpointtransformdewarp.png";
 import qrover from "../../assets/images/QRover.png";
+import redohackathon from "../../assets/images/RedoUoUHackathon.jpeg";
 import TanukiHunt from "../../assets/images/TanukiHunt.png";
+import waystaraward from "../../assets/images/WaystarAward.jpeg";
+import waystarpresentation from "../../assets/images/WaystarPresentation.jpeg";
 import pcbuildervideo from "../../assets/videos/FinalProjectVideoDemo.mp4";
 import "./Projects.css";
 
@@ -59,7 +62,7 @@ const PROJECTS = [
     highlights: [],
     tags: ["JavaScript", "Three.js", "Reinforcement learning"],
     groups: ["ai-ml", "web"],
-    images: [qrover],
+    images: [qrover, redohackathon],
     url: "https://github.com/ZeroTheNerd/CrimsonHacksFinal",
     githuburl: "https://github.com/ZeroTheNerd/CrimsonHacksFinal",
   },
@@ -76,7 +79,7 @@ const PROJECTS = [
     highlights: [],
     tags: ["Python", "LLM", "Jira API"],
     groups: ["ai-ml"],
-    images: [],
+    images: [waystaraward, waystarpresentation],
     private: true,
   },
   {
