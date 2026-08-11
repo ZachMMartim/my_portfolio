@@ -1,5 +1,5 @@
 // Projects.jsx — split browser (direction 2a)
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Bemvindos from "../../assets/images/bem-vindos.png";
 import Buildurpc from "../../assets/images/BuildUrPC.png";
 import difofguas from "../../assets/images/diffofgaussian.png";
@@ -215,6 +215,19 @@ const FILTERS = [
 
 const Projects = () => {
   const [filter, setFilter] = useState("all");
+  const [selectedId, setSelectedId] = useState(PROJECTS[0].id);
+
+  const activeFilter = FILTERS.find((f) => f.id === filter) || FILTERS[0];
+  const visible = PROJECTS.filter(activeFilter.test);
+  const selected =
+    visible.find((p) => p.id === selectedId) || visible[0] || PROJECTS[0];
+
+  // Keep a valid selection when the filter narrows the list.
+  useEffect(() => {
+    if (!visible.some((p) => p.id === selectedId) && visible[0]) {
+      setSelectedId(visible[0].id);
+    }
+  }, [filter, selectedId, visible]);
 
   return (
     <div className="projects">
@@ -253,6 +266,56 @@ const Projects = () => {
                 </button>
               );
             })}
+          </div>
+        </div>
+
+        {/* ---- split: list + detail ---- */}
+        <div className="projects-split">
+          <div className="proj-list-pane">
+            <div className="list-head">
+              <span>name</span>
+              <span>kind</span>
+              <span className="right">date</span>
+            </div>
+            <ul className="proj-list">
+              {visible.map((p) => (
+                <li key={p.id}>
+                  <button
+                    type="button"
+                    className={`proj-row ${
+                      p.id === selected.id ? "is-selected" : ""
+                    }`}
+                    onClick={() => setSelectedId(p.id)}
+                    aria-current={p.id === selected.id}
+                  >
+                    <span className="proj-lead">
+                      {p.images[0] ? (
+                        <img src={p.images[0]} alt="" className="proj-thumb" />
+                      ) : (
+                        <span className="proj-thumb proj-thumb--empty" />
+                      )}
+                      <span className="proj-id">
+                        <span className="proj-name">
+                          {p.name}
+                          {p.private && (
+                            <span className="proj-private"> · private</span>
+                          )}
+                        </span>
+                        <span className="proj-stack">{p.stack}</span>
+                      </span>
+                    </span>
+                    <span
+                      className={`proj-kind ${
+                        p.kindTone === "accent" ? "accent" : ""
+                      }`}
+                    >
+                      {p.kind}
+                    </span>
+                    <span className="proj-date">{p.date}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

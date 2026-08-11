@@ -150,3 +150,133 @@
   border-color: var(--l-accent);
   color: var(--l-surface);
 }
+
+/* ---------- split ---------- */
+.projects .projects-split {
+  display: grid;
+  grid-template-columns: 1fr 520px;
+  align-items: stretch;
+}
+
+.projects .proj-list-pane {
+  border-right: 1px solid var(--l-line);
+  min-width: 0;
+}
+
+.projects .list-head,
+.projects .proj-row {
+  display: grid;
+  grid-template-columns: 1fr 132px 96px;
+  gap: 20px;
+  align-items: center;
+}
+
+.projects .list-head {
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--l-line);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--l-dim);
+}
+
+.projects .list-head .right {
+  text-align: right;
+}
+
+.projects .proj-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.projects .proj-row {
+  width: 100%;
+  text-align: left;
+  padding: 18px 24px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--l-line);
+  border-left: 2px solid transparent;
+  cursor: pointer;
+  font: inherit;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.projects .proj-row:hover {
+  background: var(--l-surface-2);
+}
+
+.projects .proj-row.is-selected {
+  background: var(--l-selected);
+  border-left-color: var(--l-accent);
+}
+
+.projects .proj-lead {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.projects .proj-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.projects .proj-thumb--empty {
+  display: block;
+  background: repeating-linear-gradient(
+    45deg,
+    #1d2523 0 6px,
+    #232c29 6px 12px
+  );
+}
+
+.projects .proj-id {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.projects .proj-name {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--l-text);
+}
+
+.projects .proj-private {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--l-dim);
+}
+
+.projects .proj-stack {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  color: var(--l-dim);
+}
+
+.projects .proj-kind {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--l-text-3);
+}
+
+.projects .proj-kind.accent {
+  color: var(--l-accent);
+}
+
+.projects .proj-date {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--l-text-3);
+  text-align: right;
+}
+
