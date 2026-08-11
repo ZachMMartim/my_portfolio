@@ -223,6 +223,11 @@ const Projects = () => {
   const selected =
     visible.find((p) => p.id === selectedId) || visible[0] || PROJECTS[0];
 
+  // A private repo is marked, not linked. A live demo can still be public.
+  const showRepo = Boolean(selected.githuburl) && !selected.private;
+  const showDemo =
+    Boolean(selected.url) && selected.url !== selected.githuburl;
+
   // Keep a valid selection when the filter narrows the list.
   useEffect(() => {
     if (!visible.some((p) => p.id === selectedId) && visible[0]) {
@@ -387,7 +392,7 @@ const Projects = () => {
             </div>
 
             <div className="detail-actions">
-              {selected.githuburl && (
+              {showRepo && (
                 <a
                   className="btn btn-primary"
                   href={selected.githuburl}
@@ -397,7 +402,7 @@ const Projects = () => {
                   <FaGithub aria-hidden="true" /> view repo
                 </a>
               )}
-              {selected.url && selected.url !== selected.githuburl && (
+              {showDemo && (
                 <a
                   className="btn btn-ghost"
                   href={selected.url}
@@ -407,7 +412,7 @@ const Projects = () => {
                   live demo
                 </a>
               )}
-              {!selected.githuburl && !selected.url && (
+              {!showRepo && !showDemo && (
                 <span className="detail-note">
                   private repo — happy to walk through it
                 </span>
