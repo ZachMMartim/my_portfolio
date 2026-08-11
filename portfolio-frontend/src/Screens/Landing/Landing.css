@@ -1,5 +1,7 @@
 /* Landing.css — terminal-first front page (direction 1b)
-   Everything is scoped under .landing so it can't leak into other screens. */
+   Every rule is prefixed with .landing. These class names (.term-window,
+   .btn, .proj-row) are generic enough that other screens reuse them, so
+   without the prefix whichever stylesheet loads last would win. */
 
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
 
@@ -31,7 +33,7 @@
 }
 
 /* ---------- window shell ---------- */
-.term-window {
+.landing .term-window {
   max-width: 1440px;
   margin: 0 auto;
   background: var(--l-surface);
@@ -41,7 +43,7 @@
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
 }
 
-.term-header {
+.landing .term-header {
   display: flex;
   align-items: center;
   gap: 14px;
@@ -51,41 +53,41 @@
   user-select: none;
 }
 
-.term-dots {
+.landing .term-dots {
   display: flex;
   gap: 8px;
 }
 
-.term-dots .dot {
+.landing .term-dots .dot {
   width: 12px;
   height: 12px;
   border-radius: 50%;
   display: block;
 }
 
-.term-dots .red {
+.landing .term-dots .red {
   background: #ff5f56;
 }
-.term-dots .yellow {
+.landing .term-dots .yellow {
   background: #ffbd2e;
 }
-.term-dots .green {
+.landing .term-dots .green {
   background: #27c93f;
 }
 
-.term-title {
+.landing .term-title {
   font-family: "IBM Plex Mono", monospace;
   font-size: 13px;
   color: var(--l-text-3);
 }
 
-.term-nav {
+.landing .term-nav {
   margin-left: auto;
   display: flex;
   gap: 22px;
 }
 
-.term-nav-link {
+.landing .term-nav-link {
   background: none;
   border: none;
   padding: 0 0 2px;
@@ -97,16 +99,16 @@
   transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-.term-nav-link:hover {
+.landing .term-nav-link:hover {
   color: var(--l-text-2);
 }
 
-.term-nav-link.is-active {
+.landing .term-nav-link.is-active {
   color: #cfd6d1;
   border-bottom-color: var(--l-accent);
 }
 
-.term-body {
+.landing .term-body {
   padding: 56px 64px;
   display: flex;
   flex-direction: column;
@@ -114,30 +116,30 @@
 }
 
 /* ---------- prompts ---------- */
-.prompt {
+.landing .prompt {
   margin: 0;
   font-family: "IBM Plex Mono", monospace;
   font-size: 14px;
   color: var(--l-accent);
 }
 
-.prompt.muted {
+.landing .prompt.muted {
   color: var(--l-dim);
 }
 
-.prompt-sigil {
+.landing .prompt-sigil {
   color: var(--l-dim);
   margin-right: 8px;
 }
 
 /* ---------- hero ---------- */
-.hero {
+.landing .hero {
   display: flex;
   gap: 56px;
   align-items: flex-start;
 }
 
-.hero-main {
+.landing .hero-main {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -145,7 +147,7 @@
   min-width: 0;
 }
 
-.hero-name {
+.landing .hero-name {
   margin: 0;
   font-size: clamp(44px, 5.2vw, 76px);
   line-height: 1;
@@ -154,7 +156,7 @@
   color: var(--l-text);
 }
 
-.hero-tagline {
+.landing .hero-tagline {
   margin: 0;
   min-height: 30px;
   font-family: "IBM Plex Mono", monospace;
@@ -162,7 +164,7 @@
   color: var(--l-accent);
 }
 
-.caret {
+.landing .caret {
   animation: landing-blink 1s step-end infinite;
 }
 
@@ -177,7 +179,7 @@
   }
 }
 
-.hero-pitch {
+.landing .hero-pitch {
   margin: 0;
   max-width: 620px;
   font-size: clamp(17px, 1.5vw, 20px);
@@ -186,7 +188,7 @@
   text-wrap: pretty;
 }
 
-.hero-actions {
+.landing .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
@@ -194,7 +196,7 @@
 }
 
 /* ---------- buttons ---------- */
-.btn {
+.landing .btn {
   font-family: "IBM Plex Mono", monospace;
   font-size: 15px;
   font-weight: 500;
@@ -204,30 +206,30 @@
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
-.btn-primary {
+.landing .btn-primary {
   background: var(--l-accent);
   color: var(--l-surface);
   border: 1px solid var(--l-accent);
 }
 
-.btn-primary:hover {
+.landing .btn-primary:hover {
   background: #a6c2b1;
   border-color: #a6c2b1;
 }
 
-.btn-ghost {
+.landing .btn-ghost {
   background: none;
   color: #cfd6d1;
   border: 1px solid var(--l-line-2);
 }
 
-.btn-ghost:hover {
+.landing .btn-ghost:hover {
   color: var(--l-accent);
   border-color: var(--l-accent);
 }
 
 /* ---------- identity card ---------- */
-.id-card {
+.landing .id-card {
   width: 300px;
   flex-shrink: 0;
   display: flex;
@@ -239,7 +241,7 @@
   border-radius: 10px;
 }
 
-.id-photo {
+.landing .id-photo {
   width: 120px;
   height: 120px;
   border-radius: 50%;
@@ -247,7 +249,7 @@
   border: 2px solid var(--l-line-2);
 }
 
-.id-meta {
+.landing .id-meta {
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -257,32 +259,32 @@
   line-height: 1.6;
 }
 
-.id-meta > div {
+.landing .id-meta > div {
   display: flex;
   gap: 8px;
 }
 
-.id-meta dt {
+.landing .id-meta dt {
   width: 62px;
   flex-shrink: 0;
   color: var(--l-dim);
 }
 
-.id-meta dd {
+.landing .id-meta dd {
   margin: 0;
   color: #cfd6d1;
 }
 
-.id-meta .accent {
+.landing .id-meta .accent {
   color: var(--l-accent);
 }
 
-.id-rule {
+.landing .id-rule {
   height: 1px;
   background: var(--l-line);
 }
 
-.id-links {
+.landing .id-links {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -291,7 +293,7 @@
   gap: 8px;
 }
 
-.id-links a {
+.landing .id-links a {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -302,19 +304,19 @@
   transition: color 0.2s ease;
 }
 
-.id-links a:hover {
+.landing .id-links a:hover {
   color: var(--l-accent);
 }
 
 /* ---------- generic block ---------- */
-.block {
+.landing .block {
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
 
 /* ---------- experience ---------- */
-.exp-grid {
+.landing .exp-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1px;
@@ -324,7 +326,7 @@
   overflow: hidden;
 }
 
-.exp-card {
+.landing .exp-card {
   background: var(--l-surface-2);
   padding: 22px 24px;
   display: flex;
@@ -332,25 +334,25 @@
   gap: 6px;
 }
 
-.exp-org {
+.landing .exp-org {
   margin: 0;
   font-size: 18px;
   font-weight: 600;
   color: var(--l-text);
 }
 
-.exp-dates {
+.landing .exp-dates {
   margin: 0;
   font-family: "IBM Plex Mono", monospace;
   font-size: 12px;
   color: var(--l-text-3);
 }
 
-.exp-dates.accent {
+.landing .exp-dates.accent {
   color: var(--l-accent);
 }
 
-.exp-blurb {
+.landing .exp-blurb {
   margin: 4px 0 0;
   font-size: 15px;
   line-height: 1.55;
@@ -358,7 +360,7 @@
 }
 
 /* ---------- projects ---------- */
-.proj-list {
+.landing .proj-list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -367,7 +369,7 @@
   border-top: 1px solid var(--l-line);
 }
 
-.proj-row {
+.landing .proj-row {
   display: grid;
   grid-template-columns: 220px 1fr 190px;
   gap: 24px;
@@ -377,18 +379,18 @@
   transition: background 0.2s ease;
 }
 
-.proj-row:hover {
+.landing .proj-row:hover {
   background: var(--l-surface-2);
 }
 
-.proj-lead {
+.landing .proj-lead {
   display: flex;
   align-items: center;
   gap: 12px;
   min-width: 0;
 }
 
-.proj-thumb {
+.landing .proj-thumb {
   width: 40px;
   height: 40px;
   border-radius: 6px;
@@ -396,7 +398,7 @@
   flex-shrink: 0;
 }
 
-.proj-thumb--empty {
+.landing .proj-thumb--empty {
   display: block;
   background: repeating-linear-gradient(
     45deg,
@@ -405,21 +407,21 @@
   );
 }
 
-.proj-name {
+.landing .proj-name {
   margin: 0;
   font-size: 20px;
   font-weight: 600;
   color: var(--l-text);
 }
 
-.proj-blurb {
+.landing .proj-blurb {
   margin: 0;
   font-size: 15px;
   line-height: 1.55;
   color: var(--l-text-2);
 }
 
-.proj-tag {
+.landing .proj-tag {
   margin: 0;
   font-family: "IBM Plex Mono", monospace;
   font-size: 12px;
@@ -427,36 +429,36 @@
   text-align: right;
 }
 
-.proj-all {
+.landing .proj-all {
   align-self: flex-start;
   margin-top: 4px;
 }
 
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
-  .term-body {
+  .landing .term-body {
     padding: 40px 36px;
     gap: 34px;
   }
 
-  .hero {
+  .landing .hero {
     flex-direction: column;
     gap: 32px;
   }
 
-  .id-card {
+  .landing .id-card {
     width: 100%;
   }
 
-  .exp-grid {
+  .landing .exp-grid {
     grid-template-columns: 1fr;
   }
 
-  .proj-row {
+  .landing .proj-row {
     grid-template-columns: 200px 1fr;
   }
 
-  .proj-tag {
+  .landing .proj-tag {
     grid-column: 2;
     text-align: left;
   }
@@ -467,25 +469,25 @@
     padding: 12px;
   }
 
-  .term-body {
+  .landing .term-body {
     padding: 28px 20px;
     gap: 28px;
   }
 
-  .term-nav {
+  .landing .term-nav {
     display: none;
   }
 
-  .proj-row {
+  .landing .proj-row {
     grid-template-columns: 1fr;
     gap: 10px;
   }
 
-  .proj-tag {
+  .landing .proj-tag {
     grid-column: 1;
   }
 
-  .hero-actions .btn {
+  .landing .hero-actions .btn {
     flex: 1;
     text-align: center;
   }
