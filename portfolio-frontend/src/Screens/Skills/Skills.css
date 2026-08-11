@@ -261,3 +261,27 @@
   font-size: 15px;
   line-height: 1.5;
   color: var(--l-text-2);
+}
+
+/* ---------- two-column block ---------- */
+.skills .skills-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 34px;
+}
+
+/* ---------- chips ---------- */
+.skills .chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.skills .chip {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  color: #cfd6d1;
+  background: var(--l-selected);
+  border: 1px solid var(--l-line);
+  padding: 7px 12px;
+  border-radius: 4px;

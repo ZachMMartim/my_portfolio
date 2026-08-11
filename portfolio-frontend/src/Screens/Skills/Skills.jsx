@@ -53,6 +53,74 @@ const LANGUAGES = [
   },
 ];
 
+const FRAMEWORKS = [
+  {
+    name: "React",
+    evidence: "Lumen · FocusSync · this portfolio",
+    production: true,
+  },
+  {
+    name: "Next.js",
+    evidence: "Cimento executive analytics service",
+    production: true,
+  },
+  {
+    name: "Firebase Functions",
+    evidence: "Lumen publish pipeline and membership layer",
+    production: true,
+  },
+  {
+    name: "Node.js · FastAPI",
+    evidence: "FocusSync backend · hackathon services",
+    production: false,
+  },
+  {
+    name: "Unity",
+    evidence: "Tanuki Hunt · Dream Scape",
+    production: false,
+  },
+];
+
+const INFRASTRUCTURE = [
+  {
+    name: "AWS",
+    evidence:
+      "ECS, ECR, ALB, RDS Proxy, Secrets Manager at Cimento; AppSync on FocusSync",
+    production: true,
+  },
+  {
+    name: "Terraform",
+    evidence: "23 resources provisioning the analytics service",
+    production: true,
+  },
+  {
+    name: "Docker · Actions",
+    evidence: "Dockerized CI/CD pipeline at Cimento",
+    production: true,
+  },
+  {
+    name: "PostgreSQL",
+    evidence: "Multi-tenant Aurora, schema-scoped Kysely client",
+    production: true,
+  },
+  {
+    name: "ServiceNow",
+    evidence: "Three years on the University of Utah platform",
+    production: true,
+  },
+];
+
+const ALSO = [
+  "OAuth 2.1 / OIDC",
+  "multi-tenancy",
+  "GraphQL",
+  "REST APIs",
+  "reinforcement learning",
+  "digital image processing",
+  "real-time audio",
+  "Agile",
+];
+
 const Skills = () => {
   const [productionOnly, setProductionOnly] = useState(false);
 
@@ -60,6 +128,8 @@ const Skills = () => {
     productionOnly ? rows.filter((r) => r.production) : rows;
 
   const languages = keep(LANGUAGES);
+  const frameworks = keep(FRAMEWORKS);
+  const infrastructure = keep(INFRASTRUCTURE);
 
   return (
     <div className="skills">
@@ -123,6 +193,53 @@ const Skills = () => {
                   <span className="skill-since">{s.since}</span>
                   <span className="skill-evidence">{s.evidence}</span>
                 </div>
+              ))}
+            </div>
+          </section>
+
+          {/* ---- two narrower tables side by side ---- */}
+          <div className="skills-columns">
+            <section className="skills-group">
+              <h2 className="group-head">
+                <span className="group-label">frameworks</span>
+                <span className="group-rule" />
+              </h2>
+              <div className="pair-rows">
+                {frameworks.map((s) => (
+                  <div className="pair-row" key={s.name}>
+                    <span className="skill-name sm">{s.name}</span>
+                    <span className="skill-evidence">{s.evidence}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="skills-group">
+              <h2 className="group-head">
+                <span className="group-label">infrastructure &amp; data</span>
+                <span className="group-rule" />
+              </h2>
+              <div className="pair-rows">
+                {infrastructure.map((s) => (
+                  <div className="pair-row" key={s.name}>
+                    <span className="skill-name sm">{s.name}</span>
+                    <span className="skill-evidence">{s.evidence}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
+
+          <section className="skills-group">
+            <h2 className="group-head">
+              <span className="group-label">also</span>
+              <span className="group-rule" />
+            </h2>
+            <div className="chips">
+              {ALSO.map((c) => (
+                <span className="chip" key={c}>
+                  {c}
+                </span>
               ))}
             </div>
           </section>
