@@ -1,6 +1,6 @@
 # Zach Martim's Portfolio Website
 
-A modern, interactive portfolio showcasing my professional experience, technical skills, and projects. Built with React and featuring a unique desktop-inspired interface with advanced UI/UX design patterns. Feel free to check it out at zachmportfolio.vercel.app.
+A modern, interactive portfolio showcasing my professional experience, technical skills, and projects. Built with React and featuring a unique desktop-inspired interface with advanced UI/UX design patterns. Feel free to check it out at [zach-martim-portfolio.web.app](https://zach-martim-portfolio.web.app).
 
 ![Portfolio Preview](https://img.shields.io/badge/Status-Live-success)
 ![React](https://img.shields.io/badge/React-18.3.1-blue)
@@ -66,6 +66,32 @@ A modern, interactive portfolio showcasing my professional experience, technical
 - **React Scripts** 5.0.1 - Build tools
 - **Patch Package** 8.0.0 - Dependency patches
 - **ESLint** - Code linting
+
+### Hosting
+- **Firebase Hosting** - Static site hosting with CDN
+
+## Deployment
+
+The site is hosted on Firebase Hosting and deployed manually from the
+`main` branch.
+
+```bash
+# one-time, if the Firebase CLI is not installed
+npm install -g firebase-tools
+firebase login
+
+# build and deploy
+cd portfolio-frontend && npm run build && cd ..
+firebase deploy --only hosting
+```
+
+Hosting config lives in `firebase.json`; the target project is set in
+`.firebaserc`. All routes rewrite to `index.html` so client-side routing
+resolves on refresh and direct navigation.
+
+> **Note:** run the build without `CI=true`. Create React App promotes
+> ESLint warnings to errors when `CI` is set, which will fail the build on
+> warnings that do not affect the running app.
 
 
 This is a personal portfolio project, but suggestions and feedback are welcome!
