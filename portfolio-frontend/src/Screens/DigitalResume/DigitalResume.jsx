@@ -123,7 +123,7 @@ const DigitalResume = () => {
 
   const handleDownloadResume = () => {
     const link = document.createElement("a");
-    link.href = "/assets/Files/ZachMResume.pdf";
+    link.href = "/assets/Files/ZachMartimResume-2026Q3.pdf";
     link.download = "ZachMartimResume.pdf";
     document.body.appendChild(link);
     link.click();
