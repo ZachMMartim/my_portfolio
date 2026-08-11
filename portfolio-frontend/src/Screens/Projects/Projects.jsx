@@ -70,7 +70,7 @@ const PROJECTS = [
     kind: "1st place",
     kindTone: "accent",
     date: "Dec 2025",
-    meta: "1st place · TicketMaster Hack the SDLC",
+    meta: "1st place · Waystar Hack the SDLC",
     description:
       "An AI system converting meeting recordings into structured, ready-to-import Jira tickets that users can edit or adopt directly.",
     highlights: [],
