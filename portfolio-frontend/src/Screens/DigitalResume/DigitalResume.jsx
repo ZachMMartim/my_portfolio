@@ -51,7 +51,7 @@ const ENTRIES = [
     awards: [
       {
         place: "1st",
-        text: "TicketMaster Hack the SDLC — meeting recordings into Jira tickets",
+        text: "Waystar Hack the SDLC — meeting recordings into Jira tickets",
       },
       {
         place: "1st",
