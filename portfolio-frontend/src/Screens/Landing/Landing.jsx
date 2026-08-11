@@ -5,6 +5,7 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import linkedinpfp from "../../assets/images/linkedinpfp.png";
 import QRover from "../../assets/images/QRover.png";
+import waystaraward from "../../assets/images/WaystarAward.jpeg";
 import "./Landing.css";
 
 const TAGLINE = "software engineer — production systems, end to end";
@@ -48,7 +49,7 @@ const PROJECTS = [
     blurb:
       "AI system converting meeting recordings into structured, ready-to-import Jira tickets users can edit or adopt directly.",
     tag: "1st · Hack the SDLC",
-    image: null,
+    image: waystaraward,
   },
 ];
 
