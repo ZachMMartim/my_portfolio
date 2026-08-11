@@ -7,6 +7,25 @@ import "./Landing.css";
 
 const TAGLINE = "software engineer — production systems, end to end";
 
+const EXPERIENCE = [
+  {
+    org: "Cimento AI",
+    role: "SWE Intern",
+    dates: "Jan 2026 – present",
+    current: true,
+    blurb:
+      "Executive analytics service over a multi-tenant Aurora Postgres database, its AWS infrastructure in Terraform, and a production MCP server as an OAuth 2.1 resource server.",
+  },
+  {
+    org: "ServiceNow · University of Utah",
+    role: "SWE Intern",
+    dates: "Dec 2022 – Jan 2026",
+    current: false,
+    blurb:
+      "Workflows, KPIs and modules for university IT on a team of 15+; 150+ bugs resolved; Cisco ISE integration over the ERS REST API.",
+  },
+];
+
 const Landing = () => {
   const [typed, setTyped] = useState("");
   const timers = useRef([]);
@@ -147,6 +166,22 @@ const Landing = () => {
                 </li>
               </ul>
             </aside>
+          </section>
+
+          {/* ---- Experience ---- */}
+          <section className="block">
+            <p className="prompt muted">$ cat experience.txt</p>
+            <div className="exp-grid">
+              {EXPERIENCE.map((job) => (
+                <article className="exp-card" key={job.org}>
+                  <h2 className="exp-org">{job.org}</h2>
+                  <p className={`exp-dates ${job.current ? "accent" : ""}`}>
+                    {job.role} · {job.dates}
+                  </p>
+                  <p className="exp-blurb">{job.blurb}</p>
+                </article>
+              ))}
+            </div>
           </section>
         </div>
       </div>
