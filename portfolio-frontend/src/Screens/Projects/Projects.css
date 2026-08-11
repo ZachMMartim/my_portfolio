@@ -120,3 +120,33 @@
   color: var(--l-text-2);
   text-wrap: pretty;
 }
+
+.projects .filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.projects .flag {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  color: var(--l-text-2);
+  background: none;
+  border: 1px solid var(--l-line-2);
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.projects .flag:hover {
+  color: var(--l-accent);
+  border-color: var(--l-accent);
+}
+
+.projects .flag.is-active {
+  background: var(--l-accent);
+  border-color: var(--l-accent);
+  color: var(--l-surface);
+}
