@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import linkedinpfp from "../../assets/images/linkedinpfp.png";
+import QRover from "../../assets/images/QRover.png";
 import "./Landing.css";
 
 const TAGLINE = "software engineer — production systems, end to end";
@@ -23,6 +24,30 @@ const EXPERIENCE = [
     current: false,
     blurb:
       "Workflows, KPIs and modules for university IT on a team of 15+; 150+ bugs resolved; Cisco ISE integration over the ERS REST API.",
+  },
+];
+
+const PROJECTS = [
+  {
+    name: "Lumen",
+    blurb:
+      "Medical simulation platform — plugin-based OSCE cases, LLM scenario authoring, and a 16 kHz speech-to-speech audio engine.",
+    tag: "capstone · team lead, 3 eng",
+    image: null,
+  },
+  {
+    name: "Rover-Q",
+    blurb:
+      "Q-learning reinforcement learning agent that plans a Mars rover's best path, visualized live in the browser.",
+    tag: "1st · U of U × Redo",
+    image: QRover,
+  },
+  {
+    name: "Meeting → Jira",
+    blurb:
+      "AI system converting meeting recordings into structured, ready-to-import Jira tickets users can edit or adopt directly.",
+    tag: "1st · Hack the SDLC",
+    image: null,
   },
 ];
 
@@ -182,6 +207,27 @@ const Landing = () => {
                 </article>
               ))}
             </div>
+          </section>
+
+          {/* ---- Selected work ---- */}
+          <section className="block">
+            <p className="prompt muted">$ ls -l projects/ | head -3</p>
+            <ul className="proj-list">
+              {PROJECTS.map((p) => (
+                <li className="proj-row" key={p.name}>
+                  <div className="proj-lead">
+                    {p.image ? (
+                      <img src={p.image} alt="" className="proj-thumb" />
+                    ) : (
+                      <span className="proj-thumb proj-thumb--empty" />
+                    )}
+                    <h3 className="proj-name">{p.name}</h3>
+                  </div>
+                  <p className="proj-blurb">{p.blurb}</p>
+                  <p className="proj-tag">{p.tag}</p>
+                </li>
+              ))}
+            </ul>
           </section>
         </div>
       </div>
