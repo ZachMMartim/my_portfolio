@@ -1,5 +1,6 @@
 // Projects.jsx — split browser (direction 2a)
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
 import Bemvindos from "../../assets/images/bem-vindos.png";
 import Buildurpc from "../../assets/images/BuildUrPC.png";
@@ -214,6 +215,7 @@ const FILTERS = [
 ];
 
 const Projects = () => {
+  const navigate = useNavigate();
   const [filter, setFilter] = useState("all");
   const [selectedId, setSelectedId] = useState(PROJECTS[0].id);
 
@@ -244,6 +246,39 @@ const Projects = () => {
             <span className="dot green" />
           </div>
           <span className="term-title">zach@portfolio — ~/projects</span>
+          <nav className="term-nav">
+            <button
+              className="term-nav-link"
+              type="button"
+              onClick={() => navigate("/landing")}
+            >
+              home
+            </button>
+            <button className="term-nav-link is-active" type="button">
+              projects
+            </button>
+            <button
+              className="term-nav-link"
+              type="button"
+              onClick={() => navigate("/DigitalResume")}
+            >
+              resume
+            </button>
+            <button
+              className="term-nav-link"
+              type="button"
+              onClick={() => navigate("/Skills")}
+            >
+              skills
+            </button>
+            <button
+              className="term-nav-link"
+              type="button"
+              onClick={() => navigate("/Extra")}
+            >
+              extras
+            </button>
+          </nav>
         </header>
 
         {/* ---- page intro + filters ---- */}
