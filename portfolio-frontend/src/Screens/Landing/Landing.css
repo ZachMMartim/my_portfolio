@@ -431,3 +431,62 @@
   align-self: flex-start;
   margin-top: 4px;
 }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1100px) {
+  .term-body {
+    padding: 40px 36px;
+    gap: 34px;
+  }
+
+  .hero {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .id-card {
+    width: 100%;
+  }
+
+  .exp-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .proj-row {
+    grid-template-columns: 200px 1fr;
+  }
+
+  .proj-tag {
+    grid-column: 2;
+    text-align: left;
+  }
+}
+
+@media (max-width: 700px) {
+  .landing {
+    padding: 12px;
+  }
+
+  .term-body {
+    padding: 28px 20px;
+    gap: 28px;
+  }
+
+  .term-nav {
+    display: none;
+  }
+
+  .proj-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .proj-tag {
+    grid-column: 1;
+  }
+
+  .hero-actions .btn {
+    flex: 1;
+    text-align: center;
+  }
+}
