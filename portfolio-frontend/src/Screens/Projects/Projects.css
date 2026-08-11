@@ -541,6 +541,22 @@
     padding: 12px;
   }
 
+  .projects .term-header {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .projects .term-title {
+    display: none;
+  }
+
+  .projects .term-nav {
+    margin-left: 0;
+    width: 100%;
+    gap: 16px;
+    overflow-x: auto;
+  }
+
   .projects .list-head {
     display: none;
   }

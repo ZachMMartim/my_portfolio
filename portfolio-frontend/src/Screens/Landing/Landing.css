@@ -474,8 +474,20 @@
     gap: 28px;
   }
 
-  .landing .term-nav {
+  .landing .term-header {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .landing .term-title {
     display: none;
+  }
+
+  .landing .term-nav {
+    margin-left: 0;
+    width: 100%;
+    gap: 16px;
+    overflow-x: auto;
   }
 
   .landing .proj-row {
