@@ -370,3 +370,67 @@
   flex-shrink: 0;
 }
 
+/* ---------- responsive ---------- */
+@media (max-width: 1000px) {
+  .resume .resume-intro {
+    padding: 32px 24px 20px;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .resume .intro-actions {
+    justify-content: flex-start;
+  }
+
+  .resume .log {
+    padding: 32px 24px 40px;
+  }
+
+  .resume .log-entry {
+    grid-template-columns: 110px 36px 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .resume {
+    padding: 12px;
+  }
+
+  /* Dates move above the title; graph keeps the spine on the left */
+  .resume .log-entry {
+    grid-template-columns: 28px 1fr;
+  }
+
+  .resume .log-graph {
+    grid-row: 1 / span 2;
+    grid-column: 1;
+  }
+
+  .resume .log-dates {
+    grid-column: 2;
+    grid-row: 1;
+    text-align: left;
+    flex-direction: row;
+    gap: 8px;
+    padding: 0 0 6px 18px;
+  }
+
+  .resume .log-dates-end::before {
+    content: "· ";
+  }
+
+  .resume .log-body {
+    grid-column: 2;
+    grid-row: 2;
+    padding-left: 18px;
+    padding-bottom: 28px;
+  }
+
+  .resume .log-title {
+    font-size: 20px;
+  }
+
+  .resume .log-card {
+    padding: 16px 18px;
+  }
+}
