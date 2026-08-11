@@ -162,3 +162,211 @@
   color: #cfd6d1;
 }
 
+/* ---------- the log ---------- */
+.resume .log {
+  padding: 40px 56px 56px;
+}
+
+.resume .log-entry {
+  display: grid;
+  grid-template-columns: 150px 44px 1fr;
+}
+
+.resume .log-dates {
+  padding: 0 20px 34px 0;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  color: var(--l-text-2);
+  line-height: 1.6;
+}
+
+.resume .log-dates .accent {
+  color: var(--l-accent);
+}
+
+.resume .log-dates-end {
+  color: var(--l-dim);
+  font-size: 12px;
+}
+
+.resume .log-graph {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.resume .log-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--l-surface);
+  border: 2px solid var(--l-line-2);
+  display: block;
+  flex-shrink: 0;
+}
+
+.resume .log-dot.is-head {
+  background: var(--l-accent);
+  border-color: var(--l-accent);
+  box-shadow: 0 0 0 4px rgba(143, 174, 156, 0.18);
+}
+
+.resume .log-dot.is-open {
+  border-color: var(--l-accent);
+}
+
+.resume .log-line {
+  width: 2px;
+  flex: 1;
+  background: var(--l-line);
+  display: block;
+}
+
+.resume .log-body {
+  padding: 0 0 34px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.resume .log-entry.is-last .log-body,
+.resume .log-entry.is-last .log-dates {
+  padding-bottom: 0;
+}
+
+.resume .log-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.resume .head-badge {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  color: var(--l-surface);
+  background: var(--l-accent);
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+
+.resume .log-logo {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  align-self: center;
+}
+
+.resume .log-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--l-text);
+  line-height: 1.25;
+}
+
+.resume .log-org {
+  font-size: 18px;
+  color: var(--l-accent);
+}
+
+.resume .log-badge {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--l-accent);
+}
+
+.resume .log-meta {
+  margin: 0;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--l-dim);
+}
+
+.resume .log-description {
+  margin: 0;
+  max-width: 780px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--l-text-2);
+  text-wrap: pretty;
+}
+
+.resume .log-note {
+  margin: 0;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--l-dim);
+}
+
+.resume .log-card {
+  background: var(--l-surface-2);
+  border: 1px solid var(--l-line);
+  border-radius: 8px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-top: 2px;
+}
+
+.resume .log-bullet {
+  margin: 0;
+  display: flex;
+  gap: 12px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--l-text-2);
+}
+
+.resume .plus {
+  color: var(--l-accent);
+  flex-shrink: 0;
+}
+
+.resume .log-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 6px;
+}
+
+.resume .tag {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: #cfd6d1;
+  background: var(--l-selected);
+  border: 1px solid var(--l-line);
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.resume .log-awards {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.resume .log-award {
+  margin: 0;
+  display: flex;
+  gap: 12px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--l-text-2);
+}
+
+.resume .award-place {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  color: var(--l-accent);
+  width: 34px;
+  flex-shrink: 0;
+}
+
