@@ -25,7 +25,8 @@ const AppLayout = ({ children }) => {
   const location = useLocation();
 
   // Conditionally exclude NavBar on specific routes
-  const excludedRoutes = ["/"]; // Add any other routes where NavBar should not appear
+  // "/landing" and "/projects" render their own window chrome and nav
+  const excludedRoutes = ["/", "/landing", "/projects"];
 
   return (
     <div className="app-wrapper">
