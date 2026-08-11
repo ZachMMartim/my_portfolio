@@ -1,5 +1,6 @@
 // Projects.jsx — split browser (direction 2a)
 import { useEffect, useState } from "react";
+import { FaGithub } from "react-icons/fa";
 import Bemvindos from "../../assets/images/bem-vindos.png";
 import Buildurpc from "../../assets/images/BuildUrPC.png";
 import difofguas from "../../assets/images/diffofgaussian.png";
@@ -317,6 +318,102 @@ const Projects = () => {
               ))}
             </ul>
           </div>
+
+          <aside className="detail-pane" key={selected.id}>
+            <p className="detail-path">~/projects/{selected.id}</p>
+
+            {selected.images[0] ? (
+              <img
+                src={selected.images[0]}
+                alt={selected.name}
+                className="detail-hero"
+              />
+            ) : (
+              <div className="detail-hero detail-hero--empty">
+                {selected.id} — screenshot
+              </div>
+            )}
+
+            <div className="detail-head">
+              <h2 className="detail-name">{selected.name}</h2>
+              <p className="detail-meta">{selected.meta}</p>
+              <p className="detail-description">{selected.description}</p>
+            </div>
+
+            {selected.highlights.length > 0 && (
+              <div className="detail-block">
+                <p className="detail-label">highlights</p>
+                <ul className="detail-highlights">
+                  {selected.highlights.map((h) => (
+                    <li key={h}>
+                      <span className="chevron" aria-hidden="true">
+                        ›
+                      </span>
+                      {h}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {selected.images.length > 1 && (
+              <div className="detail-block">
+                <p className="detail-label">gallery</p>
+                <div className="detail-gallery">
+                  {selected.images.slice(1).map((img, i) => (
+                    <img
+                      key={i}
+                      src={img}
+                      alt={`${selected.name} screenshot ${i + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {selected.video && (
+              <div className="detail-block">
+                <p className="detail-label">demo</p>
+                <video src={selected.video} controls className="detail-video" />
+              </div>
+            )}
+
+            <div className="detail-tags">
+              {selected.tags.map((t) => (
+                <span className="tag" key={t}>
+                  {t}
+                </span>
+              ))}
+            </div>
+
+            <div className="detail-actions">
+              {selected.githuburl && (
+                <a
+                  className="btn btn-primary"
+                  href={selected.githuburl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaGithub aria-hidden="true" /> view repo
+                </a>
+              )}
+              {selected.url && selected.url !== selected.githuburl && (
+                <a
+                  className="btn btn-ghost"
+                  href={selected.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  live demo
+                </a>
+              )}
+              {!selected.githuburl && !selected.url && (
+                <span className="detail-note">
+                  private repo — happy to walk through it
+                </span>
+              )}
+            </div>
+          </aside>
         </div>
       </div>
     </div>
