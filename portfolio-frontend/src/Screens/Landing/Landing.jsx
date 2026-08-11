@@ -1,176 +1,284 @@
-// Landing.jsx (Updated)
+// Landing.jsx — terminal-first front page (direction 1b)
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import linkedinpfp from "../../assets/images/linkedinpfp.png";
-import Ulogo from "../../assets/images/Ulogo.png";
-import "../../styles/global.css";
+import QRover from "../../assets/images/QRover.png";
 import "./Landing.css";
 
+const TAGLINE = "software engineer — production systems, end to end";
+
+const EXPERIENCE = [
+  {
+    org: "Cimento AI",
+    role: "SWE Intern",
+    dates: "Jan 2026 – present",
+    current: true,
+    blurb:
+      "Executive analytics service over a multi-tenant Aurora Postgres database, its AWS infrastructure in Terraform, and a production MCP server as an OAuth 2.1 resource server.",
+  },
+  {
+    org: "ServiceNow · University of Utah",
+    role: "SWE Intern",
+    dates: "Dec 2022 – Jan 2026",
+    current: false,
+    blurb:
+      "Workflows, KPIs and modules for university IT on a team of 15+; 150+ bugs resolved; Cisco ISE integration over the ERS REST API.",
+  },
+];
+
+const PROJECTS = [
+  {
+    name: "Lumen",
+    blurb:
+      "Medical simulation platform — plugin-based OSCE cases, LLM scenario authoring, and a 16 kHz speech-to-speech audio engine.",
+    tag: "capstone · team lead, 3 eng",
+    image: null,
+  },
+  {
+    name: "Rover-Q",
+    blurb:
+      "Q-learning reinforcement learning agent that plans a Mars rover's best path, visualized live in the browser.",
+    tag: "1st · U of U × Redo",
+    image: QRover,
+  },
+  {
+    name: "Meeting → Jira",
+    blurb:
+      "AI system converting meeting recordings into structured, ready-to-import Jira tickets users can edit or adopt directly.",
+    tag: "1st · Hack the SDLC",
+    image: null,
+  },
+];
+
 const Landing = () => {
-  const [isPopupVisible, setPopupVisible] = useState(false);
-  const [dynamicText, setDynamicText] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
-  const typingInterval = useRef(null);
+  const navigate = useNavigate();
+  const [typed, setTyped] = useState("");
+  const timers = useRef([]);
 
-  const errorMessage =
-    "\tOops! It looks like you've stumbled upon a glitch in the Sim-verse!\n\nHello, I'm Zach Martim, a Student Software Engineer at the University Of Utah's ServiceNow Platform and soon-to-be Computer Science graduate.\n\nDon't worry, this isn't a real error. I'm just excited to connect with fellow tech professionals!";
-
-  // Fixed typing animation with cleanup
-  const typeMessage = () => {
-    let i = 0;
-    setDynamicText(""); // Reset text before typing
-    clearInterval(typingInterval.current);
-
-    typingInterval.current = setInterval(() => {
-      if (i < errorMessage.length) {
-        setDynamicText((prev) => prev + errorMessage[i]);
-        i++;
-      } else {
-        clearInterval(typingInterval.current);
-        setIsTyping(false);
-      }
-    }, 30);
-  };
-
+  // Typewriter for the tagline. Respects reduced-motion, cleans up on unmount.
   useEffect(() => {
-    const hasVisited = sessionStorage.getItem("hasVisitedSession");
-    if (!hasVisited) {
-      const timeout = setTimeout(() => {
-        setPopupVisible(true);
-        new Audio("https://www.myinstants.com/media/sounds/erro.mp3").play();
-        sessionStorage.setItem("hasVisitedSession", "true");
-      }, 200);
-      return () => clearTimeout(timeout);
+    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)")
+      .matches;
+    if (reduce) {
+      setTyped(TAGLINE);
+      return undefined;
     }
+
+    let i = 0;
+    const start = setTimeout(() => {
+      const tick = setInterval(() => {
+        i += 1;
+        setTyped(TAGLINE.slice(0, i));
+        if (i >= TAGLINE.length) clearInterval(tick);
+      }, 42);
+      timers.current.push(tick);
+    }, 300);
+    timers.current.push(start);
+
+    return () => {
+      timers.current.forEach((t) => {
+        clearTimeout(t);
+        clearInterval(t);
+      });
+      timers.current = [];
+    };
   }, []);
 
-  useEffect(() => {
-    if (isPopupVisible && !isTyping) {
-      setIsTyping(true);
-      typeMessage();
-    }
-    return () => clearInterval(typingInterval.current);
-  }, [isPopupVisible]);
+  const handleDownloadResume = () => {
+    const link = document.createElement("a");
+    link.href = "/assets/Files/ZachMResume.pdf";
+    link.download = "ZachMartimResume.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
-    <div className="landing-container">
-      {/* Left Section */}
-      <div className="landing-left">
-        <div className="profile-picture">
-          <img src={linkedinpfp} alt="Profile" className="profile-img" />
-        </div>
-        {/* Add your name and title */}
-        <div className="profile-details">
-          <h2>Zach Martim</h2>
-          <h4>Student Software Engineer</h4>
-          <h4 className="university-row">
-            University of Utah{" "}
-            <img src={Ulogo} alt="U logo" className="u-logo" />{" "}
-          </h4>
-          <p>Salt Lake City, UT</p>
-        </div>
+    <div className="landing">
+      <div className="term-window">
+        <header className="term-header">
+          <div className="term-dots" aria-hidden="true">
+            <span className="dot red" />
+            <span className="dot yellow" />
+            <span className="dot green" />
+          </div>
+          <span className="term-title">zach@portfolio — zsh</span>
+          <nav className="term-nav">
+            <button className="term-nav-link is-active" type="button">
+              home
+            </button>
+            <button
+              className="term-nav-link"
+              type="button"
+              onClick={() => navigate("/projects")}
+            >
+              projects
+            </button>
+            <button
+              className="term-nav-link"
+              type="button"
+              onClick={() => navigate("/DigitalResume")}
+            >
+              resume
+            </button>
+            <button
+              className="term-nav-link"
+              type="button"
+              onClick={() => navigate("/Skills")}
+            >
+              skills
+            </button>
+            <button
+              className="term-nav-link"
+              type="button"
+              onClick={() => navigate("/Extra")}
+            >
+              extras
+            </button>
+          </nav>
+        </header>
 
-        <div className="card connect-card">
-          <h3>Connect with Me</h3>
-          <ul className="social-links">
-            <li>
-              <a
-                href="https://www.linkedin.com/in/zachmartim"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-              >
-                <FaLinkedin />
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://github.com/ZeroTheNerd"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-              >
-                <FaGithub />
-              </a>
-            </li>
-            <li>
-              <a
-                href="mailto:zachmartim101@gmail.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Email"
-              >
-                <MdEmail />
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      {/* Right Section */}
-      <div className="landing-right">
-        {isPopupVisible && (
-          <div className="popup">
-            <div className="popup-content">
-              <div className="popup-header">
-                <span className="popup-title">Error Message</span>
+        <div className="term-body">
+          {/* ---- Hero ---- */}
+          <section className="hero">
+            <div className="hero-main">
+              <p className="prompt">
+                <span className="prompt-sigil">$</span> whoami
+              </p>
+              <h1 className="hero-name">Zach Martim</h1>
+              <p className="hero-tagline">
+                {typed}
+                <span className="caret" aria-hidden="true">
+                  _
+                </span>
+              </p>
+              <p className="hero-pitch">
+                New-grad software engineer graduating December 2026. Three years
+                of engineering internships, three hackathon wins, and a habit of
+                building the unglamorous parts — auth, multi-tenancy, data
+                pipelines — properly.
+              </p>
+              <div className="hero-actions">
                 <button
-                  onClick={() => {
-                    setPopupVisible(false);
-                    // If you want to reset stickies or perform other actions on close, add here
-                  }}
-                  className="close-button"
+                  className="btn btn-primary"
+                  type="button"
+                  onClick={handleDownloadResume}
                 >
-                  X
+                  ./resume.pdf
+                </button>
+                <button
+                  className="btn btn-ghost"
+                  type="button"
+                  onClick={() => navigate("/projects")}
+                >
+                  cd projects/
                 </button>
               </div>
-              <p className="typing">{dynamicText}</p>
             </div>
-          </div>
-        )}
 
-        {!isPopupVisible && (
-          <div className="about-me-panel">
-            <h2>About Me</h2>
-            <p>
-              Hi, I’m <span className="about-name">Zach Martim</span> - a
-              passionate Student Software Engineer for our ServiceNow platform
-              at the University of Utah. I am currently pursuing my degree in
-              Computer Science with an expected graduation date of December
-              2026. Driven by curiosity and creativity, I love building tools,
-              collaborating on innovative projects and finding simple solutions.
-            </p>
-            <p>
-              <strong className="about-excited">What gets me excited?</strong>{" "}
-              Tackling coding challenges, participating in hackathons, game jams
-              and even CTF challenges. I love finding new ways to grow, and
-              connecting with people who share a love for tech (or games, or
-              amazing coffee/drinks!).
-            </p>
-            <ul className="about-facts">
-              <li>
-                I strive for great teamwork and collaboration. I am able to
-                learn the most from others and find motivation through my peers.
-              </li>
-              <li>
-                Outside the screen, which is rare, you can catch me hanging out
-                with friends, jamming to some music, or on a nice day out with
-                my partner.
-              </li>
-              <li>
-                Favorite saying:{" "}
-                <em>
-                  “If debugging is the process of removing software bugs, then
-                  programming must be the process of putting them in”
-                </em>
-              </li>
+            <aside className="id-card">
+              <img
+                src={linkedinpfp}
+                alt="Zach Martim"
+                className="id-photo"
+                loading="lazy"
+              />
+              <dl className="id-meta">
+                <div>
+                  <dt>loc</dt>
+                  <dd>Salt Lake City, UT</dd>
+                </div>
+                <div>
+                  <dt>edu</dt>
+                  <dd>
+                    U of U — CS, AI/ML
+                    <br />
+                    GPA 3.6 · Dec 2026
+                  </dd>
+                </div>
+                <div>
+                  <dt>status</dt>
+                  <dd className="accent">open to new-grad SWE</dd>
+                </div>
+              </dl>
+              <div className="id-rule" />
+              <ul className="id-links">
+                <li>
+                  <a
+                    href="https://www.linkedin.com/in/zachmartim"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaLinkedin aria-hidden="true" />
+                    linkedin.com/in/zachmartim
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ZeroTheNerd"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaGithub aria-hidden="true" />
+                    github.com/ZeroTheNerd
+                  </a>
+                </li>
+                <li>
+                  <a href="mailto:zachmartim101@gmail.com">
+                    <MdEmail aria-hidden="true" />
+                    zachmartim101@gmail.com
+                  </a>
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          {/* ---- Experience ---- */}
+          <section className="block">
+            <p className="prompt muted">$ cat experience.txt</p>
+            <div className="exp-grid">
+              {EXPERIENCE.map((job) => (
+                <article className="exp-card" key={job.org}>
+                  <h2 className="exp-org">{job.org}</h2>
+                  <p className={`exp-dates ${job.current ? "accent" : ""}`}>
+                    {job.role} · {job.dates}
+                  </p>
+                  <p className="exp-blurb">{job.blurb}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* ---- Selected work ---- */}
+          <section className="block">
+            <p className="prompt muted">$ ls -l projects/ | head -3</p>
+            <ul className="proj-list">
+              {PROJECTS.map((p) => (
+                <li className="proj-row" key={p.name}>
+                  <div className="proj-lead">
+                    {p.image ? (
+                      <img src={p.image} alt="" className="proj-thumb" />
+                    ) : (
+                      <span className="proj-thumb proj-thumb--empty" />
+                    )}
+                    <h3 className="proj-name">{p.name}</h3>
+                  </div>
+                  <p className="proj-blurb">{p.blurb}</p>
+                  <p className="proj-tag">{p.tag}</p>
+                </li>
+              ))}
             </ul>
-            <p>
-              Let’s connect—I'm always open to collaborations and conversation!
-            </p>
-          </div>
-        )}
+            <button
+              className="btn btn-ghost proj-all"
+              type="button"
+              onClick={() => navigate("/projects")}
+            >
+              see all projects →
+            </button>
+          </section>
+        </div>
       </div>
     </div>
   );
