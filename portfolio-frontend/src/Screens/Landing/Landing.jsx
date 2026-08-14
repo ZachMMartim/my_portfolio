@@ -6,6 +6,7 @@ import { MdEmail } from "react-icons/md";
 import linkedinpfp from "../../assets/images/linkedinpfp.png";
 import QRover from "../../assets/images/QRover.png";
 import waystaraward from "../../assets/images/WaystarAward.jpeg";
+import AskBar from "../../components/AskBar/AskBar";
 import "./Landing.css";
 
 const TAGLINE = "software engineer — production systems, end to end";
@@ -273,6 +274,7 @@ const Landing = () => {
             </button>
           </section>
         </div>
+        <AskBar />
       </div>
     </div>
   );
