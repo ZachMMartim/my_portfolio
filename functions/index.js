@@ -139,8 +139,18 @@ async function callClaude(messages, apiKey) {
   });
 
   if (!response.ok) {
-    const detail = await response.text();
-    throw new Error(`anthropic ${response.status}: ${detail.slice(0, 400)}`);
+    // Deliberately not including the response body. Anthropic's error payloads
+    // can quote the offending request, so logging them would put visitor text
+    // into Cloud Logging through the failure path -- the one place the privacy
+    // policy promises conversations do not go. Status and type are enough to
+    // debug from.
+    let type = "unknown";
+    try {
+      type = (await response.json())?.error?.type ?? "unknown";
+    } catch {
+      // Non-JSON error body; the status alone will have to do.
+    }
+    throw new Error(`anthropic ${response.status} (${type})`);
   }
 
   return response.json();

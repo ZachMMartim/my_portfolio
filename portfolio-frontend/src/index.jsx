@@ -29,6 +29,7 @@ const AppLayout = ({ children }) => {
     "/projects",
     "/DigitalResume",
     "/Skills",
+    "/PrivacyPolicy",
   ];
 
   return (
