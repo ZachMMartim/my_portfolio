@@ -3,17 +3,22 @@
    (.landing, .projects, .skills, .resume). Fallbacks match those scopes and
    only apply if the bar is ever mounted outside one.
 
-   Four colours in the design have no --l-* equivalent, so they are declared
+   Three colours in the design have no --l-* equivalent, so they are declared
    locally rather than added to all four page scopes:
-     --ask-panel        the expanded panel, one step darker than --l-surface
-     --ask-divider      the hairline under the panel header
-     --ask-placeholder  dimmer than --l-dim, used only for placeholder text
-     --ask-live         the green session dot */
+     --ask-panel    the expanded panel, one step darker than --l-surface
+     --ask-divider  the hairline under the panel header
+     --ask-live     the green session dot
+
+   Secondary text uses --l-text-3 rather than the canvas greys. The design
+   put the placeholder at #4c5754, which is 2.28:1 on the bar -- half the
+   4.5:1 WCAG AA needs, on the one line that tells a visitor what the bar
+   does. --l-text-3 scores 5.64 there and 6.23 on the panel, and the same
+   swap lifts the caret, the shortcut badge, the panel actions and the "you"
+   label, all of which were between 3.98 and 4.40. */
 
 .term-ask {
   --ask-panel: #0c1211;
   --ask-divider: #1f2725;
-  --ask-placeholder: #4c5754;
   --ask-live: #27c93f;
 
   border-top: 1px solid var(--l-line, #2b3532);
@@ -56,18 +61,18 @@
   flex: 1;
   font-family: "IBM Plex Mono", monospace;
   font-size: 15px;
-  color: var(--ask-placeholder);
+  color: var(--l-text-3, #8b978f);
 }
 
 .term-ask .ask-caret {
-  color: var(--l-dim, #6f7d79);
+  color: var(--l-text-3, #8b978f);
   animation: ask-blink 1s step-end infinite;
 }
 
 .term-ask .ask-key {
   font-family: "IBM Plex Mono", monospace;
   font-size: 12px;
-  color: var(--l-dim, #6f7d79);
+  color: var(--l-text-3, #8b978f);
   border: 1px solid var(--l-line, #2b3532);
   padding: 4px 8px;
   border-radius: 3px;
@@ -119,7 +124,8 @@
 .term-ask .ask-action {
   font-family: "IBM Plex Mono", monospace;
   font-size: 12px;
-  color: var(--l-dim, #6f7d79);
+  color: var(--l-text-3, #8b978f);
+  white-space: nowrap;
   background: none;
   border: 0;
   padding: 0;
@@ -128,12 +134,6 @@
 
 .term-ask .ask-action:hover {
   color: var(--l-text-2, #b4bfb8);
-}
-
-.term-ask .ask-hint {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 12px;
-  color: var(--l-dim, #6f7d79);
 }
 
 /* ---------- transcript ---------- */
@@ -157,7 +157,7 @@
   font-size: 14px;
   flex-shrink: 0;
   width: 62px;
-  color: var(--l-dim, #6f7d79);
+  color: var(--l-text-3, #8b978f);
 }
 
 .term-ask .ask-turn.is-assistant .ask-role {
@@ -189,11 +189,11 @@
   height: 6px;
   border-radius: 50%;
   display: block;
-  background: var(--l-dim, #6f7d79);
+  background: var(--l-text-3, #8b978f);
 }
 
 .term-ask .ask-typing span:nth-child(2) {
-  background: var(--ask-placeholder);
+  background: var(--l-dim, #6f7d79);
 }
 
 .term-ask .ask-typing span:nth-child(3) {
@@ -254,7 +254,7 @@
 }
 
 .term-ask .ask-input::placeholder {
-  color: var(--ask-placeholder);
+  color: var(--l-text-3, #8b978f);
 }
 
 .term-ask .ask-input:focus {
