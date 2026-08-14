@@ -49,16 +49,18 @@ A modern, interactive portfolio showcasing my professional experience, technical
 - **React** 18.3.1 - UI framework
 - **React Router** 6.27.0 - Navigation
 - **React Icons** 5.5.0 - Icon library
-- **Framer Motion** 11.11.11 - Animations
-- **GSAP** 3.12.7 - Advanced animations
-- **React Awesome Reveal** 4.3.1 - Scroll animations
 
-### Backend & Database
-- **Supabase** - Backend as a Service
-  - PostgreSQL database
-  - Edge Functions for chatbot
-  - Real-time capabilities
-  - Authentication ready
+Animation is plain CSS and small `useEffect` timers. The typewriter, the boot
+terminal and the ask bar's caret all respect `prefers-reduced-motion`.
+
+### Backend
+- **Firebase Cloud Functions** - one function, `functions/`, holding the API key
+- **Claude Haiku 4.5** - the ask bar's model, via the Anthropic Messages API
+
+No database. The system prompt is generated at deploy time from
+`portfolio-frontend/src/content/*.json`, the same content the pages render, so
+the bot cannot drift from the site. Captured leads and unanswered questions go
+to Cloud Logging, plus a webhook if `LEAD_WEBHOOK_URL` is set.
 
 ### Development Tools
 - **Create React App** - Project setup
@@ -67,7 +69,7 @@ A modern, interactive portfolio showcasing my professional experience, technical
 - **ESLint** - Code linting
 
 ### Hosting
-- **Firebase Hosting** - Static site hosting with CDN
+- **Firebase Hosting** - Static site hosting with CDN, rewriting `/api/chat` to the function
 
 ## Deployment
 
