@@ -4,55 +4,16 @@ import { useNavigate } from "react-router-dom";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import linkedinpfp from "../../assets/images/linkedinpfp.png";
-import QRover from "../../assets/images/QRover.png";
-import waystaraward from "../../assets/images/WaystarAward.jpeg";
+import { asset } from "../../assets/assetMap";
+import EXPERIENCE from "../../content/experience.json";
+import SELECTED_WORK from "../../content/selectedWork.json";
 import AskBar from "../../components/AskBar/AskBar";
 import "./Landing.css";
 
 const TAGLINE = "software engineer — production systems, end to end";
 
-const EXPERIENCE = [
-  {
-    org: "Cimento AI",
-    role: "SWE Intern",
-    dates: "Jan 2026 – present",
-    current: true,
-    blurb:
-      "Executive analytics service over a multi-tenant Aurora Postgres database, its AWS infrastructure in Terraform, and a production MCP server as an OAuth 2.1 resource server.",
-  },
-  {
-    org: "ServiceNow · University of Utah",
-    role: "SWE Intern",
-    dates: "Dec 2022 – Jan 2026",
-    current: false,
-    blurb:
-      "Workflows, KPIs and modules for university IT on a team of 15+; 150+ bugs resolved; Cisco ISE integration over the ERS REST API.",
-  },
-];
-
-const PROJECTS = [
-  {
-    name: "Lumen",
-    blurb:
-      "Medical simulation platform — plugin-based OSCE cases, LLM scenario authoring, and a 16 kHz speech-to-speech audio engine.",
-    tag: "capstone · team lead, 3 eng",
-    image: null,
-  },
-  {
-    name: "Rover-Q",
-    blurb:
-      "Q-learning reinforcement learning agent that plans a Mars rover's best path, visualized live in the browser.",
-    tag: "1st · U of U × Redo",
-    image: QRover,
-  },
-  {
-    name: "Meeting → Jira",
-    blurb:
-      "AI system converting meeting recordings into structured, ready-to-import Jira tickets users can edit or adopt directly.",
-    tag: "1st · Hack the SDLC",
-    image: waystaraward,
-  },
-];
+// Asset keys resolve to real imports here so the JSX below is unchanged.
+const PROJECTS = SELECTED_WORK.map((p) => ({ ...p, image: asset(p.imageKey) }));
 
 const Landing = () => {
   const navigate = useNavigate();
