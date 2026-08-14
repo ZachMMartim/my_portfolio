@@ -1,1 +1,0 @@
-export { Zein } from "./zein";
