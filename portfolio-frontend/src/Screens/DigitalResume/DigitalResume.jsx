@@ -167,13 +167,6 @@ const DigitalResume = () => {
             >
               skills
             </button>
-            <button
-              className="term-nav-link"
-              type="button"
-              onClick={() => navigate("/Extra")}
-            >
-              extras
-            </button>
           </nav>
         </header>
 
