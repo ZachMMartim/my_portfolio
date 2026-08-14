@@ -14,7 +14,13 @@ const logger = require("firebase-functions/logger");
 const { buildPersona } = require("./persona");
 
 const ANTHROPIC_API_KEY = defineSecret("ANTHROPIC_API_KEY");
-const LEAD_WEBHOOK_URL = defineSecret("LEAD_WEBHOOK_URL");
+
+// Read straight from the environment rather than declared with defineSecret,
+// which makes a secret mandatory and blocks deploys until it exists. This one
+// is genuinely optional: without it leads still reach Cloud Logging. Set it in
+// functions/.env (gitignored) or promote it to a real secret if the URL you
+// use is sensitive.
+const leadWebhookUrl = () => process.env.LEAD_WEBHOOK_URL || null;
 
 const API_URL = "https://api.anthropic.com/v1/messages";
 const MODEL = "claude-haiku-4-5-20251001";
@@ -158,7 +164,12 @@ function sanitiseHistory(history) {
 exports.chat = onRequest(
   {
     region: "us-central1",
-    secrets: [ANTHROPIC_API_KEY, LEAD_WEBHOOK_URL],
+    secrets: [ANTHROPIC_API_KEY],
+    // v2 functions are Cloud Run services and are not publicly invokable by
+    // default; without this the endpoint answers 403 to everyone, including
+    // the hosting rewrite. This is a public chat endpoint, so allUsers is
+    // correct -- the API key stays server-side either way.
+    invoker: "public",
     cors: true,
     maxInstances: 5,
     timeoutSeconds: 60,
@@ -180,7 +191,7 @@ exports.chat = onRequest(
       return;
     }
 
-    const webhookUrl = LEAD_WEBHOOK_URL.value() || null;
+    const webhookUrl = leadWebhookUrl();
 
     const messages = [
       ...sanitiseHistory(req.body?.history),
