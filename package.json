@@ -1,16 +1,12 @@
 {
   "name": "portfolioweb",
   "version": "1.0.0",
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "index.js",
+  "description": "Zach Martim's portfolio. The site is in portfolio-frontend/, its chat backend in functions/.",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm --prefix portfolio-frontend run build",
+    "start": "npm --prefix portfolio-frontend start",
+    "deploy": "npm run build && firebase deploy"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.21.1"
-  },
-  "devDependencies": {}
+  "license": "MIT"
 }

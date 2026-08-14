@@ -1,8 +1,8 @@
 // DigitalResume.jsx — career log (direction 3b)
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import byulogo from "../../assets/images/Byulogo.png";
-import Ulogo from "../../assets/images/Ulogored.png";
+import { asset } from "../../assets/assetMap";
+import ENTRY_DATA from "../../content/resume.json";
 import AskBar from "../../components/AskBar/AskBar";
 import "./DigitalResume.css";
 
@@ -15,93 +15,7 @@ import "./DigitalResume.css";
      bullets  rendered inside a card, prefixed with "+"
      logo     optional school/company mark
    ------------------------------------------------------------------ */
-const ENTRIES = [
-  {
-    id: "cimento",
-    type: "work",
-    head: true,
-    start: "Jan 2026",
-    end: "present",
-    title: "Software Engineer Intern",
-    org: "Cimento AI",
-    meta: "Salt Lake City, UT · 7 months",
-    bullets: [
-      "Executive analytics service in Next.js and TypeScript — 15 metrics, 4 views, multi-tenant Aurora Postgres.",
-      "Schema-scoped Kysely client on one shared pool, parallelized so a failing tenant can't break reporting.",
-      "Production MCP server as an OAuth 2.1 resource server, 8 read-only tools, tenant-scoped audit logging.",
-      "23 Terraform resources with a Dockerized GitHub Actions pipeline and a read-only database role.",
-    ],
-    tags: ["Next.js", "TypeScript", "Go", "Terraform", "Aurora Postgres"],
-  },
-  {
-    id: "lumen",
-    type: "project",
-    start: "Jan 2026",
-    end: "capstone",
-    title: "Lumen — senior capstone",
-    badge: "team lead, 3 engineers",
-    description:
-      "Medical simulation platform: LLM scenario authoring replacing a 45-field form, a plugin-based case system with 9 slide types, and a real-time speech-to-speech audio engine.",
-  },
-  {
-    id: "hackathons",
-    type: "award",
-    start: "Dec 2025",
-    end: "Aug 2025",
-    title: "Three hackathon placements",
-    awards: [
-      {
-        place: "1st",
-        text: "Waystar Hack the SDLC — meeting recordings into Jira tickets",
-      },
-      {
-        place: "1st",
-        text: "University of Utah × Redo — Rover-Q, Q-learning path planning",
-      },
-      {
-        place: "3rd",
-        text: "Redo Agentic AI — pre-launch product analytics",
-      },
-    ],
-  },
-  {
-    id: "servicenow",
-    type: "work",
-    start: "Dec 2022",
-    end: "Jan 2026",
-    title: "Software Engineer Intern",
-    org: "ServiceNow · University of Utah",
-    meta: "Salt Lake City, UT · 3 years 2 months",
-    bullets: [
-      "Workflows, forms, KPIs, reports and modules on a team of 15+ developers.",
-      "150+ system bugs resolved across university IT infrastructure.",
-      "Cisco ISE integration via the ERS REST API through MID Servers.",
-    ],
-    tags: ["ServiceNow", "JavaScript", "REST APIs", "Flow Designer"],
-  },
-  {
-    id: "utah",
-    type: "education",
-    start: "Aug 2022",
-    end: "Dec 2026",
-    title: "University of Utah",
-    logo: Ulogo,
-    description:
-      "B.S. Computer Science, AI/ML and Information tracks · GPA 3.6",
-    note:
-      "Adv. AI · Machine Learning · Algorithms · Database Systems · Computer Systems · Digital Image Processing",
-  },
-  {
-    id: "byu",
-    type: "education",
-    start: "Aug 2021",
-    end: "Apr 2022",
-    title: "Brigham Young University",
-    logo: byulogo,
-    description:
-      "B.S. Computer Science — transferred to the University of Utah",
-  },
-];
+const ENTRIES = ENTRY_DATA.map((e) => ({ ...e, logo: asset(e.logoKey) }));
 
 const FILTERS = [
   { id: "all", label: "--all", test: () => true },

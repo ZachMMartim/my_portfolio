@@ -1,6 +1,7 @@
 // Skills.jsx — evidence table (direction 4a)
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import skills from "../../content/skills.json";
 import AskBar from "../../components/AskBar/AskBar";
 import "./Skills.css";
 
@@ -10,118 +11,7 @@ import "./Skills.css";
      evidence     project or role that proves it
      production   true = shipped to a real user, drives --production-only
    ------------------------------------------------------------------ */
-const LANGUAGES = [
-  {
-    name: "TypeScript",
-    since: "2024",
-    evidence: "Cimento analytics service · Lumen · this portfolio",
-    production: true,
-  },
-  {
-    name: "Python",
-    since: "2021",
-    evidence: "Autoscanner OCR pipeline · Rover-Q · ML and AI coursework",
-    production: true,
-  },
-  {
-    name: "Go",
-    since: "2026",
-    evidence: "Cimento — bluemonday sanitization gate at send time",
-    production: true,
-  },
-  {
-    name: "SQL",
-    since: "2023",
-    evidence: "Multi-tenant Aurora Postgres schemas · Database Systems",
-    production: true,
-  },
-  {
-    name: "C++ / C",
-    since: "2022",
-    evidence: "PC Builder Simulator (Qt, Box2D) · Computer Systems",
-    production: false,
-  },
-  {
-    name: "C#",
-    since: "2023",
-    evidence: "Tanuki Hunt · Dream Scape · .NET/MAUI",
-    production: false,
-  },
-  {
-    name: "Java",
-    since: "2022",
-    evidence: "Data Structures & Algorithms coursework",
-    production: false,
-  },
-];
-
-const FRAMEWORKS = [
-  {
-    name: "React",
-    evidence: "Lumen · FocusSync · this portfolio",
-    production: true,
-  },
-  {
-    name: "Next.js",
-    evidence: "Cimento executive analytics service",
-    production: true,
-  },
-  {
-    name: "Firebase Functions",
-    evidence: "Lumen publish pipeline and membership layer",
-    production: true,
-  },
-  {
-    name: "Node.js · FastAPI",
-    evidence: "FocusSync backend · hackathon services",
-    production: false,
-  },
-  {
-    name: "Unity",
-    evidence: "Tanuki Hunt · Dream Scape",
-    production: false,
-  },
-];
-
-const INFRASTRUCTURE = [
-  {
-    name: "AWS",
-    evidence:
-      "ECS, ECR, ALB, RDS Proxy, Secrets Manager at Cimento; AppSync on FocusSync",
-    production: true,
-  },
-  {
-    name: "Terraform",
-    evidence: "23 resources provisioning the analytics service",
-    production: true,
-  },
-  {
-    name: "Docker · Actions",
-    evidence: "Dockerized CI/CD pipeline at Cimento",
-    production: true,
-  },
-  {
-    name: "PostgreSQL",
-    evidence: "Multi-tenant Aurora, schema-scoped Kysely client",
-    production: true,
-  },
-  {
-    name: "ServiceNow",
-    evidence: "Three years on the University of Utah platform",
-    production: true,
-  },
-];
-
-const ALSO = [
-  "OAuth 2.1 / OIDC",
-  "multi-tenancy",
-  "GraphQL",
-  "REST APIs",
-  "reinforcement learning",
-  "digital image processing",
-  "real-time audio",
-  "Agile",
-];
+const { ALSO, FRAMEWORKS, INFRASTRUCTURE, LANGUAGES } = skills;
 
 const Skills = () => {
   const navigate = useNavigate();

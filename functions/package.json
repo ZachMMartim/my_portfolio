@@ -1,0 +1,16 @@
+{
+  "name": "portfolio-functions",
+  "description": "Cloud Functions backing the portfolio ask bar",
+  "private": true,
+  "main": "index.js",
+  "engines": {
+    "node": "22"
+  },
+  "scripts": {
+    "sync-content": "node sync-content.js",
+    "lint": "echo \"no linter configured\" && exit 0"
+  },
+  "dependencies": {
+    "firebase-functions": "^6.1.0"
+  }
+}
