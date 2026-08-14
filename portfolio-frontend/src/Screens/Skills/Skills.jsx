@@ -1,6 +1,7 @@
 // Skills.jsx — evidence table (direction 4a)
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AskBar from "../../components/AskBar/AskBar";
 import "./Skills.css";
 
 /* ------------------------------------------------------------------
@@ -272,6 +273,7 @@ const Skills = () => {
             </div>
           </section>
         </div>
+        <AskBar />
       </div>
     </div>
   );

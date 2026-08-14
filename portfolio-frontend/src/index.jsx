@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import Footer from "./components/Footer/Footer";
 import NavBar from "./components/Navigation/NavBar";
-import ChatWidget from "./components/ChatWidget/ChatWidget";
 import { WindowProvider } from "./context/WindowContext";
 import DigitalResume from "./Screens/DigitalResume/DigitalResume";
 import { PowerShellAnimation } from "./Screens/Element/DesktopScreen";
@@ -39,7 +38,6 @@ const AppLayout = ({ children }) => {
       {!excludedRoutes.includes(location.pathname) && <NavBar />}
       <div className="main-content">{children}</div>
       <Footer />
-      <ChatWidget />
     </div>
   );
 };
