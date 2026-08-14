@@ -1,0 +1,311 @@
+/* The docked ask bar. Rendered as the last child of .term-window on the four
+   terminal pages, so every --l-* below resolves from the page scope
+   (.landing, .projects, .skills, .resume). Fallbacks match those scopes and
+   only apply if the bar is ever mounted outside one.
+
+   Four colours in the design have no --l-* equivalent, so they are declared
+   locally rather than added to all four page scopes:
+     --ask-panel        the expanded panel, one step darker than --l-surface
+     --ask-divider      the hairline under the panel header
+     --ask-placeholder  dimmer than --l-dim, used only for placeholder text
+     --ask-live         the green session dot */
+
+.term-ask {
+  --ask-panel: #0c1211;
+  --ask-divider: #1f2725;
+  --ask-placeholder: #4c5754;
+  --ask-live: #27c93f;
+
+  border-top: 1px solid var(--l-line, #2b3532);
+}
+
+@keyframes ask-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ---------- the prompt row, shared by the collapsed and expanded states ---------- */
+
+.term-ask .ask-prompt {
+  width: 100%;
+  background: var(--l-surface-2, #161d1c);
+  border: 0;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+  font: inherit;
+  cursor: text;
+}
+
+.term-ask .ask-sigil {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 15px;
+  color: var(--l-accent, #8fae9c);
+  flex-shrink: 0;
+}
+
+.term-ask .ask-placeholder {
+  flex: 1;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 15px;
+  color: var(--ask-placeholder);
+}
+
+.term-ask .ask-caret {
+  color: var(--l-dim, #6f7d79);
+  animation: ask-blink 1s step-end infinite;
+}
+
+.term-ask .ask-key {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--l-dim, #6f7d79);
+  border: 1px solid var(--l-line, #2b3532);
+  padding: 4px 8px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* ---------- expanded panel ---------- */
+
+.term-ask .ask-panel {
+  background: var(--ask-panel);
+  border-top: 1px solid var(--l-line, #2b3532);
+}
+
+.term-ask .ask-panel-header {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ask-divider);
+}
+
+.term-ask .ask-session {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.term-ask .ask-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ask-live);
+  display: block;
+  flex-shrink: 0;
+}
+
+.term-ask .ask-title {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  color: var(--l-text-2, #b4bfb8);
+}
+
+.term-ask .ask-panel-actions {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.term-ask .ask-action {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--l-dim, #6f7d79);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.term-ask .ask-action:hover {
+  color: var(--l-text-2, #b4bfb8);
+}
+
+.term-ask .ask-hint {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--l-dim, #6f7d79);
+}
+
+/* ---------- transcript ---------- */
+
+.term-ask .ask-log {
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: 380px;
+  overflow-y: auto;
+}
+
+.term-ask .ask-turn {
+  display: flex;
+  gap: 14px;
+}
+
+.term-ask .ask-role {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 14px;
+  flex-shrink: 0;
+  width: 62px;
+  color: var(--l-dim, #6f7d79);
+}
+
+.term-ask .ask-turn.is-assistant .ask-role {
+  color: var(--l-accent, #8fae9c);
+}
+
+.term-ask .ask-text {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--l-text, #f0f3ee);
+  max-width: 760px;
+}
+
+.term-ask .ask-turn.is-assistant .ask-text {
+  line-height: 1.65;
+  color: var(--l-text-2, #b4bfb8);
+}
+
+.term-ask .ask-typing {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  padding-top: 6px;
+}
+
+.term-ask .ask-typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: block;
+  background: var(--l-dim, #6f7d79);
+}
+
+.term-ask .ask-typing span:nth-child(2) {
+  background: var(--ask-placeholder);
+}
+
+.term-ask .ask-typing span:nth-child(3) {
+  background: var(--l-line-2, #3a4643);
+}
+
+/* ---------- suggestions ---------- */
+
+.term-ask .ask-suggestions {
+  padding: 0 20px 16px 20px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.term-ask .ask-chip {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--l-text-2, #b4bfb8);
+  background: none;
+  border: 1px solid var(--l-line-2, #3a4643);
+  padding: 6px 11px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.term-ask .ask-chip:hover:not(:disabled) {
+  border-color: var(--l-accent, #8fae9c);
+  color: var(--l-accent, #8fae9c);
+}
+
+.term-ask .ask-chip:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* ---------- input ---------- */
+
+.term-ask .ask-form {
+  background: var(--l-surface-2, #161d1c);
+  border-top: 1px solid var(--l-line, #2b3532);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.term-ask .ask-input {
+  flex: 1;
+  min-width: 0;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 15px;
+  color: var(--l-text, #f0f3ee);
+  background: none;
+  border: 0;
+  padding: 0;
+  caret-color: var(--l-accent, #8fae9c);
+}
+
+.term-ask .ask-input::placeholder {
+  color: var(--ask-placeholder);
+}
+
+.term-ask .ask-input:focus {
+  outline: none;
+}
+
+.term-ask .ask-send {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--l-surface, #101615);
+  background: var(--l-accent, #8fae9c);
+  border: 0;
+  padding: 5px 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.term-ask .ask-send:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* ---------- narrow screens ---------- */
+
+@media (max-width: 720px) {
+  .term-ask .ask-prompt,
+  .term-ask .ask-form {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .term-ask .ask-key {
+    display: none;
+  }
+
+  .term-ask .ask-log {
+    padding: 18px 14px;
+    max-height: 300px;
+  }
+
+  .term-ask .ask-turn {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .term-ask .ask-role {
+    width: auto;
+  }
+
+  .term-ask .ask-suggestions {
+    padding: 0 14px 14px 14px;
+  }
+}
