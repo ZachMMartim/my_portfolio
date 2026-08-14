@@ -52,7 +52,6 @@ A modern, interactive portfolio showcasing my professional experience, technical
 - **Framer Motion** 11.11.11 - Animations
 - **GSAP** 3.12.7 - Advanced animations
 - **React Awesome Reveal** 4.3.1 - Scroll animations
-- **React Draggable** 4.5.0 - Interactive elements
 
 ### Backend & Database
 - **Supabase** - Backend as a Service
