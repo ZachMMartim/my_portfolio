@@ -9,9 +9,8 @@ import {
 import Footer from "./components/Footer/Footer";
 import NavBar from "./components/Navigation/NavBar";
 import { WindowProvider } from "./context/WindowContext";
+import Boot from "./Screens/Boot/Boot";
 import DigitalResume from "./Screens/DigitalResume/DigitalResume";
-import { PowerShellAnimation } from "./Screens/Element/DesktopScreen";
-import Element from "./Screens/Element/Element";
 import Landing from "./Screens/Landing/Landing";
 import PrivacyPolicy from "./Screens/Privacy Policy/PrivacyPolicy";
 import Projects from "./Screens/Projects/Projects";
@@ -48,10 +47,9 @@ root.render(
     <WindowProvider>
       <AppLayout>
         <Routes>
-          <Route path="/" element={<PowerShellAnimation />} />
-          {/* Other routes */}
+          {/* Boot terminal, then straight to /landing */}
+          <Route path="/" element={<Boot />} />
           <Route path="/landing" element={<Landing />} />
-          <Route path="/element" element={<Element />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/Skills" element={<Skills />} />
           <Route path="/DigitalResume" element={<DigitalResume />} />
