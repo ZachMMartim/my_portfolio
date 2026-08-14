@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
+import AskBar from "../../components/AskBar/AskBar";
 import Bemvindos from "../../assets/images/bem-vindos.png";
 import Buildurpc from "../../assets/images/BuildUrPC.png";
 import difofguas from "../../assets/images/diffofgaussian.png";
@@ -450,6 +451,7 @@ const Projects = () => {
             </div>
           </aside>
         </div>
+        <AskBar />
       </div>
     </div>
   );

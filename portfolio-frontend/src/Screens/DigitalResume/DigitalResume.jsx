@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import byulogo from "../../assets/images/Byulogo.png";
 import Ulogo from "../../assets/images/Ulogored.png";
+import AskBar from "../../components/AskBar/AskBar";
 import "./DigitalResume.css";
 
 /* ------------------------------------------------------------------
@@ -274,6 +275,7 @@ const DigitalResume = () => {
             );
           })}
         </div>
+        <AskBar />
       </div>
     </div>
   );
