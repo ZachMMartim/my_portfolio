@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { supabaseAnonKey, supabaseUrl } from "../../lib/supabase";
 import "./AskBar.css";
+
+// Same-origin: firebase.json rewrites this to the chat function, ahead of the
+// SPA catch-all. No key ships to the browser.
+const CHAT_ENDPOINT = "/api/chat";
 
 const SUGGESTIONS = [
   "why should I hire you?",
@@ -13,20 +16,8 @@ const AskBar = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [sessionId, setSessionId] = useState("");
   const inputRef = useRef(null);
   const logEndRef = useRef(null);
-
-  useEffect(() => {
-    let stored = sessionStorage.getItem("chatSessionId");
-    if (!stored) {
-      stored = `session_${Date.now()}_${Math.random()
-        .toString(36)
-        .substring(2, 11)}`;
-      sessionStorage.setItem("chatSessionId", stored);
-    }
-    setSessionId(stored);
-  }, []);
 
   // Cmd/Ctrl+K opens the bar, Escape closes it. The collapsed state advertises
   // the shortcut, so it has to work.
@@ -66,13 +57,10 @@ const AskBar = () => {
       setIsLoading(true);
 
       try {
-        const response = await fetch(`${supabaseUrl}/functions/v1/chatbot`, {
+        const response = await fetch(CHAT_ENDPOINT, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${supabaseAnonKey}`,
-          },
-          body: JSON.stringify({ message: trimmed, sessionId, history }),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: trimmed, history }),
         });
 
         if (!response.ok) {
@@ -98,7 +86,7 @@ const AskBar = () => {
         setIsLoading(false);
       }
     },
-    [isLoading, messages, sessionId]
+    [isLoading, messages]
   );
 
   const onSubmit = (event) => {
