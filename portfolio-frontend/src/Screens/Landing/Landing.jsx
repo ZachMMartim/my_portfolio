@@ -5,8 +5,8 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import linkedinpfp from "../../assets/images/linkedinpfp.png";
 import { asset } from "../../assets/assetMap";
-import { EXPERIENCE } from "../../content/experience";
-import { SELECTED_WORK } from "../../content/selectedWork";
+import EXPERIENCE from "../../content/experience.json";
+import SELECTED_WORK from "../../content/selectedWork.json";
 import AskBar from "../../components/AskBar/AskBar";
 import "./Landing.css";
 

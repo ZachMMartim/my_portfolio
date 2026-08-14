@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { asset } from "../../assets/assetMap";
-import { ENTRIES as ENTRY_DATA } from "../../content/resume";
+import ENTRY_DATA from "../../content/resume.json";
 import AskBar from "../../components/AskBar/AskBar";
 import "./DigitalResume.css";
 

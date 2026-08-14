@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { asset, assets } from "../../assets/assetMap";
-import { PROJECTS as PROJECT_DATA } from "../../content/projects";
+import PROJECT_DATA from "../../content/projects.json";
 import { FaGithub } from "react-icons/fa";
 import AskBar from "../../components/AskBar/AskBar";
 import "./Projects.css";

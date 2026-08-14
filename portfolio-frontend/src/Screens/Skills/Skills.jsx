@@ -1,12 +1,7 @@
 // Skills.jsx — evidence table (direction 4a)
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  ALSO,
-  FRAMEWORKS,
-  INFRASTRUCTURE,
-  LANGUAGES,
-} from "../../content/skills";
+import skills from "../../content/skills.json";
 import AskBar from "../../components/AskBar/AskBar";
 import "./Skills.css";
 
@@ -16,6 +11,8 @@ import "./Skills.css";
      evidence     project or role that proves it
      production   true = shipped to a real user, drives --production-only
    ------------------------------------------------------------------ */
+const { ALSO, FRAMEWORKS, INFRASTRUCTURE, LANGUAGES } = skills;
+
 const Skills = () => {
   const navigate = useNavigate();
   const [productionOnly, setProductionOnly] = useState(false);
