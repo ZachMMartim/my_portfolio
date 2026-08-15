@@ -27,6 +27,36 @@
     "private": true
   },
   {
+    "id": "card",
+    "name": "Card",
+    "stack": "React Native · Expo · TypeScript",
+    "kind": "side project",
+    "kindTone": "",
+    "date": "2026",
+    "meta": "side project · solo · playable in the browser",
+    "description": "An idle poker deckbuilder, running here as an Expo web export of the mobile app. Hand types are never bought: a bot can only play a hand you have played yourself at least once, so sitting down at the table is what unlocks automation.",
+    "highlights": [
+      "Headless game engine with no clock reads and no ambient randomness — 457 tests",
+      "Offline earnings and live play run the same function, asserted to produce identical state",
+      "Custom mantissa/exponent number type so the economy keeps its digits past 1e308"
+    ],
+    "tags": [
+      "React Native",
+      "Expo",
+      "TypeScript",
+      "Reanimated"
+    ],
+    "groups": [
+      "games",
+      "web"
+    ],
+    "imageKeys": [
+      "CardGame"
+    ],
+    "playUrl": "/card/",
+    "private": true
+  },
+  {
     "id": "rover-q",
     "name": "Rover-Q",
     "stack": "Three.js · Q-learning",

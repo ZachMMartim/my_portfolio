@@ -39,6 +39,9 @@ const Projects = () => {
   const navigate = useNavigate();
   const [filter, setFilter] = useState("all");
   const [selectedId, setSelectedId] = useState(PROJECTS[0].id);
+  // The project currently open in the play overlay, or null. Held as a url
+  // rather than a boolean so a second playable project needs no new state.
+  const [playing, setPlaying] = useState(null);
 
   const activeFilter = FILTERS.find((f) => f.id === filter) || FILTERS[0];
   const visible = PROJECTS.filter(activeFilter.test);
@@ -49,6 +52,9 @@ const Projects = () => {
   const showRepo = Boolean(selected.githuburl) && !selected.private;
   const showDemo =
     Boolean(selected.url) && selected.url !== selected.githuburl;
+  // A playUrl is served from this site's own public/ folder, so it runs in an
+  // overlay here rather than opening a tab.
+  const showPlay = Boolean(selected.playUrl);
 
   // Keep a valid selection when the filter narrows the list.
   useEffect(() => {
@@ -56,6 +62,17 @@ const Projects = () => {
       setSelectedId(visible[0].id);
     }
   }, [filter, selectedId, visible]);
+
+  // Escape closes the demo. The overlay covers the whole page, so leaving the
+  // keyboard without a way out would trap anyone not using a mouse.
+  useEffect(() => {
+    if (!playing) return undefined;
+    const onKey = (e) => {
+      if (e.key === "Escape") setPlaying(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [playing]);
 
   return (
     <div className="projects">
@@ -240,6 +257,15 @@ const Projects = () => {
             </div>
 
             <div className="detail-actions">
+              {showPlay && (
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => setPlaying(selected.playUrl)}
+                >
+                  <span aria-hidden="true">▶</span> play now
+                </button>
+              )}
               {showRepo && (
                 <a
                   className="btn btn-primary"
@@ -260,7 +286,7 @@ const Projects = () => {
                   live demo
                 </a>
               )}
-              {!showRepo && !showDemo && (
+              {!showRepo && !showDemo && !showPlay && (
                 <span className="detail-note">
                   private repo — happy to walk through it
                 </span>
@@ -270,6 +296,33 @@ const Projects = () => {
         </div>
         <AskBar />
       </div>
+
+      {playing && (
+        <div
+          className="play-overlay"
+          onClick={() => setPlaying(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${selected.name} — playable demo`}
+        >
+          <div className="play-shell" onClick={(e) => e.stopPropagation()}>
+            <div className="play-bar">
+              <span className="play-path">~/projects/{selected.id} — running</span>
+              <button
+                type="button"
+                className="play-close"
+                onClick={() => setPlaying(null)}
+                aria-label="Close the demo"
+              >
+                ×
+              </button>
+            </div>
+            {/* The game is a separate document under public/, so it keeps its own
+                fonts, audio and localStorage without touching the portfolio. */}
+            <iframe src={playing} title={`${selected.name} demo`} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
