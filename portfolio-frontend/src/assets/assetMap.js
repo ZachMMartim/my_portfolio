@@ -8,6 +8,7 @@
 import bemvindos from "./images/bem-vindos.png";
 import buildurpc from "./images/BuildUrPC.png";
 import byulogo from "./images/Byulogo.png";
+import cardgame from "./images/CardGame.png";
 import diffofgaussian from "./images/diffofgaussian.png";
 import docscanner from "./images/docscanner.png";
 import dreamscapelogo from "./images/Dreamscapelogo.png";
@@ -26,6 +27,7 @@ const ASSETS = {
   "bem-vindos": bemvindos,
   BuildUrPC: buildurpc,
   Byulogo: byulogo,
+  CardGame: cardgame,
   diffofgaussian,
   docscanner,
   Dreamscapelogo: dreamscapelogo,

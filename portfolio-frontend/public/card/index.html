@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--
+      user-scalable=no because this is a game with a drag-to-arrange card fan:
+      a pinch that zooms the page mid-drag is never what the player meant.
+      viewport-fit=cover lets the dark ground run under a notch.
+    -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no, viewport-fit=cover"
+    />
+    <title>Card — idle poker deckbuilder</title>
+    <meta name="description" content="An idle poker deckbuilder. Play hands to teach your bots, then let them grind while you rebuild the deck." />
+    <meta name="theme-color" content="#0D0E16" />
+    <meta property="og:title" content="Card — idle poker deckbuilder" />
+    <meta property="og:description" content="Play a hand to unlock it. Your bots can only play what you have played yourself." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <style id="expo-reset">
+      /* react-native-web's recommended reset, kept verbatim. */
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        overflow: hidden;
+      }
+      #root {
+        display: flex;
+        height: 100%;
+        flex: 1;
+      }
+    </style>
+
+    <style id="card-shell">
+      :root {
+        --bg-deep: #0d0e16;
+        --border: #33355a;
+        --muted: #8b8fc7;
+        --accent: #5ce08a;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg-deep);
+        /* A game, not a document: no rubber-banding and no text selection when a
+           drag on the card fan slips off a card. */
+        overscroll-behavior: none;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /*
+        THE DESKTOP FRAME. The app is a portrait phone layout and nothing in it
+        reads window dimensions (there is no `useWindowDimensions` in the source),
+        so constraining the root is purely a presentation choice and the app lays
+        out inside it exactly as it does on a device.
+
+        Below this breakpoint — real phones — the game is full-bleed and none of
+        this applies.
+      */
+      @media (min-width: 680px) and (min-height: 560px) {
+        body {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 28px;
+          box-sizing: border-box;
+        }
+        #root {
+          flex: none;
+          width: 430px;
+          max-width: 100%;
+          /* 932 is the tallest phone the design targets; shrink to fit shorter windows. */
+          height: min(932px, calc(100dvh - 56px));
+          border: 3px solid var(--border);
+          /* The design spec's own rule: hard offset shadows, zero blur. */
+          box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.55);
+          overflow: hidden;
+        }
+      }
+
+      /* ---- boot state -------------------------------------------------------
+         The bundle is ~1.7MB, so there is a real moment before React mounts.
+         An empty black rectangle reads as broken; this reads as booting. */
+      #boot {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        background: var(--bg-deep);
+        color: var(--muted);
+        font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+        font-size: 11px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        z-index: 10;
+        transition: opacity 260ms ease-out;
+      }
+      #boot.done {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #boot .bar {
+        width: 132px;
+        height: 10px;
+        border: 2px solid var(--border);
+        position: relative;
+        overflow: hidden;
+      }
+      #boot .bar i {
+        position: absolute;
+        inset: 2px auto 2px 2px;
+        width: 26px;
+        background: var(--accent);
+        animation: sweep 1100ms steps(9, end) infinite;
+      }
+      @keyframes sweep {
+        from { transform: translateX(0); }
+        to   { transform: translateX(96px); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #boot .bar i { animation: none; }
+      }
+      #boot noscript {
+        color: var(--accent);
+        letter-spacing: 0.12em;
+      }
+    </style>
+  <link rel="icon" href="/card/favicon.ico" /></head>
+
+  <body>
+    <div id="root"></div>
+
+    <div id="boot">
+      <div class="bar"><i></i></div>
+      <div>Dealing in</div>
+      <noscript>This game needs JavaScript enabled.</noscript>
+    </div>
+
+    <script>
+      // Drop the boot screen the moment React puts anything inside #root, rather
+      // than on a timer that is either too early on a slow connection or a stall
+      // on a fast one.
+      (function () {
+        var root = document.getElementById('root');
+        var boot = document.getElementById('boot');
+        if (!root || !boot) return;
+        var finish = function () {
+          boot.className = 'done';
+          setTimeout(function () {
+            if (boot.parentNode) boot.parentNode.removeChild(boot);
+          }, 320);
+        };
+        if (root.childNodes.length) return finish();
+        var obs = new MutationObserver(function () {
+          if (root.childNodes.length) {
+            obs.disconnect();
+            finish();
+          }
+        });
+        obs.observe(root, { childList: true });
+        // Backstop: never leave the curtain up on a bundle that failed to mount.
+        setTimeout(function () {
+          obs.disconnect();
+          finish();
+        }, 20000);
+      })();
+    </script>
+  <script src="/card/_expo/static/js/web/index-6dad1b62b6a4373430453c9e341872ec.js" defer></script>
+</body>
+</html>
