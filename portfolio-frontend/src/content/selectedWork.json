@@ -1,5 +1,13 @@
 [
   {
+    "name": "Card",
+    "blurb": "An idle poker deckbuilder. Bots can only play a hand you've played yourself at least once, so the table is what unlocks automation.",
+    "tag": null,
+    "imageKey": "CardGame",
+    "playable": true,
+    "playUrl": "/card/"
+  },
+  {
     "name": "Lumen",
     "blurb": "Medical simulation platform — plugin-based OSCE cases, LLM scenario authoring, and a 16 kHz speech-to-speech audio engine.",
     "tag": "capstone · team lead, 3 eng",
@@ -10,11 +18,5 @@
     "blurb": "Q-learning reinforcement learning agent that plans a Mars rover's best path, visualized live in the browser.",
     "tag": "1st · U of U × Redo",
     "imageKey": "QRover"
-  },
-  {
-    "name": "Meeting → Jira",
-    "blurb": "AI system converting meeting recordings into structured, ready-to-import Jira tickets users can edit or adopt directly.",
-    "tag": "1st · Hack the SDLC",
-    "imageKey": "WaystarAward"
   }
 ]
