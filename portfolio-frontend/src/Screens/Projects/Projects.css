@@ -76,33 +76,6 @@
   background: #27c93f;
 }
 
-.projects .term-nav {
-  margin-left: auto;
-  display: flex;
-  gap: 22px;
-}
-
-.projects .term-nav-link {
-  background: none;
-  border: none;
-  padding: 0 0 2px;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 13px;
-  color: var(--l-dim);
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: color 0.2s ease, border-color 0.2s ease;
-}
-
-.projects .term-nav-link:hover {
-  color: var(--l-text-2);
-}
-
-.projects .term-nav-link.is-active {
-  color: #cfd6d1;
-  border-bottom-color: var(--l-accent);
-}
-
 .projects .term-title {
   font-family: "IBM Plex Mono", monospace;
   font-size: 13px;
@@ -548,13 +521,6 @@
 
   .projects .term-title {
     display: none;
-  }
-
-  .projects .term-nav {
-    margin-left: 0;
-    width: 100%;
-    gap: 16px;
-    overflow-x: auto;
   }
 
   .projects .list-head {

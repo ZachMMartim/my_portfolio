@@ -75,33 +75,6 @@
   background: #27c93f;
 }
 
-.resume .term-nav {
-  margin-left: auto;
-  display: flex;
-  gap: 22px;
-}
-
-.resume .term-nav-link {
-  background: none;
-  border: none;
-  padding: 0 0 2px;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 13px;
-  color: var(--l-dim);
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: color 0.2s ease, border-color 0.2s ease;
-}
-
-.resume .term-nav-link:hover {
-  color: var(--l-text-2);
-}
-
-.resume .term-nav-link.is-active {
-  color: #cfd6d1;
-  border-bottom-color: var(--l-accent);
-}
-
 .resume .term-title {
   font-family: "IBM Plex Mono", monospace;
   font-size: 13px;
@@ -430,13 +403,6 @@
 
   .resume .term-title {
     display: none;
-  }
-
-  .resume .term-nav {
-    margin-left: 0;
-    width: 100%;
-    gap: 16px;
-    overflow-x: auto;
   }
 
   /* Dates move above the title; graph keeps the spine on the left */

@@ -1,9 +1,9 @@
 // DigitalResume.jsx — career log (direction 3b)
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { asset } from "../../assets/assetMap";
 import ENTRY_DATA from "../../content/resume.json";
 import AskBar from "../../components/AskBar/AskBar";
+import TermNav from "../../components/Navigation/TermNav";
 import "./DigitalResume.css";
 
 /* ------------------------------------------------------------------
@@ -30,7 +30,6 @@ const FILTERS = [
 ];
 
 const DigitalResume = () => {
-  const navigate = useNavigate();
   const [filter, setFilter] = useState("all");
 
   const active = FILTERS.find((f) => f.id === filter) || FILTERS[0];
@@ -57,32 +56,7 @@ const DigitalResume = () => {
           <span className="term-title">
             zach@portfolio — git log --career
           </span>
-          <nav className="term-nav">
-            <button
-              className="term-nav-link"
-              type="button"
-              onClick={() => navigate("/landing")}
-            >
-              home
-            </button>
-            <button
-              className="term-nav-link"
-              type="button"
-              onClick={() => navigate("/projects")}
-            >
-              projects
-            </button>
-            <button className="term-nav-link is-active" type="button">
-              resume
-            </button>
-            <button
-              className="term-nav-link"
-              type="button"
-              onClick={() => navigate("/Skills")}
-            >
-              skills
-            </button>
-          </nav>
+          <TermNav active="resume" />
         </header>
 
         <div className="resume-intro">

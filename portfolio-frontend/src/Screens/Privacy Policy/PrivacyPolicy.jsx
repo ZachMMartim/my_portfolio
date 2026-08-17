@@ -10,14 +10,12 @@
 // transcript, and the only recorded data comes from the two tools the model
 // can call.
 
-import { useNavigate } from "react-router-dom";
+import TermNav from "../../components/Navigation/TermNav";
 import "./PrivacyPolicy.css";
 
 const UPDATED = "14 August 2026";
 
 const PrivacyPolicy = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="privacy">
       <div className="term-window">
@@ -28,36 +26,7 @@ const PrivacyPolicy = () => {
             <span className="dot green" />
           </div>
           <span className="term-title">zach@portfolio — cat PRIVACY.md</span>
-          <nav className="term-nav">
-            <button
-              className="term-nav-link"
-              type="button"
-              onClick={() => navigate("/landing")}
-            >
-              home
-            </button>
-            <button
-              className="term-nav-link"
-              type="button"
-              onClick={() => navigate("/projects")}
-            >
-              projects
-            </button>
-            <button
-              className="term-nav-link"
-              type="button"
-              onClick={() => navigate("/DigitalResume")}
-            >
-              resume
-            </button>
-            <button
-              className="term-nav-link"
-              type="button"
-              onClick={() => navigate("/Skills")}
-            >
-              skills
-            </button>
-          </nav>
+          <TermNav />
         </header>
 
         <div className="privacy-body">
