@@ -19,7 +19,7 @@ body {
 }
 
 .page-footer {
-  background-color: #72817e; /* Matches navbar color */
+  background-color: #72817e; /* Carried over from the pre-terminal design */
   color: #ffffff; /* White text for contrast */
   padding: 20px; /* Add spacing inside the footer */
   text-align: center; /* Center-align text and links */
