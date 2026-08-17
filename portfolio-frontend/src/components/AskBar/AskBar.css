@@ -170,9 +170,7 @@
   line-height: 1.6;
   color: var(--l-text, #f0f3ee);
   max-width: 760px;
-  /* A flex item defaults to min-width:auto, which refuses to shrink below its
-     content -- a long code fence would then widen the whole panel instead of
-     scrolling inside its own block. */
+  /* Lets a code fence scroll instead of widening the panel. */
   min-width: 0;
 }
 

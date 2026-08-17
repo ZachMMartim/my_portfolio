@@ -1,11 +1,7 @@
 import { Suspense, lazy, useCallback, useEffect, useRef, useState } from "react";
 import "./AskBar.css";
 
-// react-markdown and its parser are the heaviest thing this component pulls in,
-// and the panel is collapsed until someone opens it -- so the renderer rides in
-// its own chunk instead of the landing page's bundle. Opening the panel warms
-// it (see the isOpen effect below), which lands well before the first answer
-// comes back over the network.
+// Lazy: the panel starts collapsed, so the parser stays out of the main bundle.
 const Markdown = lazy(() => import("./Markdown"));
 
 // Same-origin: firebase.json rewrites this to the chat function, ahead of the
@@ -45,8 +41,7 @@ const AskBar = () => {
   useEffect(() => {
     if (isOpen) {
       inputRef.current?.focus();
-      // Fetch the renderer's chunk while the user is still typing, so the first
-      // answer never has to wait on it.
+      // Warm the chunk while they type.
       import("./Markdown");
     }
   }, [isOpen]);
@@ -169,9 +164,7 @@ const AskBar = () => {
                 <span className="ask-role">
                   {message.role === "assistant" ? "zach" : "you"}
                 </span>
-                {/* Only the model's turns are parsed. What the visitor typed is
-                    echoed verbatim -- someone asking about **kwargs should see
-                    the asterisks they wrote, not bold text. */}
+                {/* Only model turns are parsed; visitor text echoes verbatim. */}
                 <div className="ask-text">
                   {message.role === "assistant" ? (
                     <Suspense fallback={message.content}>

@@ -1,19 +1,10 @@
 import ReactMarkdown from "react-markdown";
 import "./Markdown.css";
 
-// The chat answers arrive as markdown. Nothing asks the model for it -- the
-// system prompt in functions/persona.js is itself written in markdown, so the
-// model mirrors the format it was handed. Rendering that string straight into
-// a <span> printed literal ** and folded every newline away, because HTML
-// collapses whitespace and a span is inline.
-//
-// react-markdown does not render raw HTML unless rehype-raw is added, and it
-// runs hrefs through a URL transform, so nothing the model returns can inject
-// markup. The overrides below add no behaviour -- they exist only to hang the
-// terminal panel's classes off the elements react-markdown generates.
+// Renders the assistant's markdown. Overrides only attach the panel's classes.
+// See docs/decisions/askbar-markdown.md
 
-// Chat turns sit inside the page, so a model that opens with "# Projects"
-// should not outrank the page's own headings. Everything lands in h4-h6.
+// Clamped to h4-h6 so a model heading can't outrank the page's own.
 const heading = (level) => {
   const Tag = `h${Math.min(level + 3, 6)}`;
   const Heading = ({ children }) => <Tag className="ask-md-heading">{children}</Tag>;
@@ -28,9 +19,7 @@ const components = {
   blockquote: ({ children }) => <blockquote className="ask-md-quote">{children}</blockquote>,
   hr: () => <hr className="ask-md-rule" />,
 
-  // Fenced blocks keep the chip styling off: .ask-md-pre .ask-md-code undoes
-  // the inline background and border in CSS rather than branching here, which
-  // is what lets both cases share one component.
+  // Fences drop the inline chip styling in CSS, not here.
   pre: ({ children }) => <pre className="ask-md-pre">{children}</pre>,
   code: ({ className, children }) => (
     <code className={`ask-md-code${className ? ` ${className}` : ""}`}>{children}</code>
