@@ -1,8 +1,8 @@
 // Skills.jsx — evidence table (direction 4a)
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import skills from "../../content/skills.json";
 import AskBar from "../../components/AskBar/AskBar";
+import TermNav from "../../components/Navigation/TermNav";
 import "./Skills.css";
 
 /* ------------------------------------------------------------------
@@ -14,7 +14,6 @@ import "./Skills.css";
 const { ALSO, FRAMEWORKS, INFRASTRUCTURE, LANGUAGES } = skills;
 
 const Skills = () => {
-  const navigate = useNavigate();
   const [productionOnly, setProductionOnly] = useState(false);
 
   const keep = (rows) =>
@@ -34,32 +33,7 @@ const Skills = () => {
             <span className="dot green" />
           </div>
           <span className="term-title">zach@portfolio — ~/skills</span>
-          <nav className="term-nav">
-            <button
-              className="term-nav-link"
-              type="button"
-              onClick={() => navigate("/landing")}
-            >
-              home
-            </button>
-            <button
-              className="term-nav-link"
-              type="button"
-              onClick={() => navigate("/projects")}
-            >
-              projects
-            </button>
-            <button
-              className="term-nav-link"
-              type="button"
-              onClick={() => navigate("/DigitalResume")}
-            >
-              resume
-            </button>
-            <button className="term-nav-link is-active" type="button">
-              skills
-            </button>
-          </nav>
+          <TermNav active="skills" />
         </header>
 
         <div className="skills-intro">

@@ -8,6 +8,7 @@ import { asset } from "../../assets/assetMap";
 import EXPERIENCE from "../../content/experience.json";
 import SELECTED_WORK from "../../content/selectedWork.json";
 import AskBar from "../../components/AskBar/AskBar";
+import TermNav from "../../components/Navigation/TermNav";
 import "./Landing.css";
 
 const TAGLINE = "software engineer — production systems, end to end";
@@ -68,32 +69,7 @@ const Landing = () => {
             <span className="dot green" />
           </div>
           <span className="term-title">zach@portfolio — zsh</span>
-          <nav className="term-nav">
-            <button className="term-nav-link is-active" type="button">
-              home
-            </button>
-            <button
-              className="term-nav-link"
-              type="button"
-              onClick={() => navigate("/projects")}
-            >
-              projects
-            </button>
-            <button
-              className="term-nav-link"
-              type="button"
-              onClick={() => navigate("/DigitalResume")}
-            >
-              resume
-            </button>
-            <button
-              className="term-nav-link"
-              type="button"
-              onClick={() => navigate("/Skills")}
-            >
-              skills
-            </button>
-          </nav>
+          <TermNav active="home" />
         </header>
 
         <div className="term-body">
