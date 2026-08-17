@@ -201,6 +201,39 @@
   border-color: var(--l-accent);
 }
 
+/* Narrower than .btn's 13px 22px because the badge adds visual width. */
+.landing .btn-play {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: none;
+  color: var(--l-accent);
+  border: 1px solid var(--l-accent);
+  padding: 13px 20px;
+}
+
+.landing .btn-play:hover {
+  background: var(--l-accent);
+  color: var(--l-surface);
+}
+
+.landing .btn-badge {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--l-surface);
+  background: var(--l-accent);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.landing .btn-play:hover .btn-badge {
+  color: var(--l-accent);
+  background: var(--l-surface);
+}
+
 /* ---------- identity card ---------- */
 .landing .id-card {
   width: 300px;
@@ -344,7 +377,7 @@
 
 .landing .proj-row {
   display: grid;
-  grid-template-columns: 220px 1fr 190px;
+  grid-template-columns: 260px 1fr 210px;
   gap: 24px;
   align-items: center;
   padding: 20px 8px;
@@ -363,12 +396,61 @@
   min-width: 0;
 }
 
+.landing .proj-row.is-playable {
+  background: var(--l-surface-2);
+  border-left: 2px solid var(--l-accent);
+}
+
 .landing .proj-thumb {
   width: 40px;
   height: 40px;
   border-radius: 6px;
   object-fit: cover;
   flex-shrink: 0;
+}
+
+/* 40px reads as an icon; 52px reads as a screenshot of something openable. */
+.landing .is-playable .proj-thumb {
+  width: 52px;
+  height: 52px;
+}
+
+.landing .proj-id {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.landing .proj-live {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  color: var(--l-accent);
+}
+
+.landing .proj-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #27c93f;
+  display: block;
+  flex-shrink: 0;
+}
+
+.landing .proj-action {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.landing .btn-play-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  padding: 10px 18px;
 }
 
 .landing .proj-thumb--empty {
@@ -435,6 +517,11 @@
     grid-column: 2;
     text-align: left;
   }
+
+  .landing .proj-action {
+    grid-column: 2;
+    justify-content: flex-start;
+  }
 }
 
 @media (max-width: 700px) {
@@ -462,6 +549,10 @@
   }
 
   .landing .proj-tag {
+    grid-column: 1;
+  }
+
+  .landing .proj-action {
     grid-column: 1;
   }
 

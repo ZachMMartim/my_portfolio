@@ -3,7 +3,7 @@ import "./TermNav.css";
 
 const LINKS = [
   { id: "home", label: "home", to: "/landing" },
-  { id: "projects", label: "projects", to: "/projects" },
+  { id: "projects", label: "projects", to: "/projects", chip: "play" },
   { id: "resume", label: "resume", to: "/DigitalResume" },
   { id: "skills", label: "skills", to: "/Skills" },
 ];
@@ -15,16 +15,19 @@ const TermNav = ({ active }) => {
 
   return (
     <nav className="term-nav">
-      {LINKS.map(({ id, label, to }) => {
+      {LINKS.map(({ id, label, to, chip }) => {
         const isActive = id === active;
         return (
           <button
             key={id}
-            className={`term-nav-link${isActive ? " is-active" : ""}`}
+            className={`term-nav-link${isActive ? " is-active" : ""}${
+              chip ? " has-chip" : ""
+            }`}
             type="button"
             onClick={isActive ? undefined : () => navigate(to)}
           >
             {label}
+            {chip && <span className="nav-chip">{chip}</span>}
           </button>
         );
       })}

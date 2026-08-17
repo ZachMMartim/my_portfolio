@@ -1,5 +1,6 @@
 // Projects.jsx — split browser (direction 2a)
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { asset, assets } from "../../assets/assetMap";
 import PROJECT_DATA from "../../content/projects.json";
 import { FaGithub } from "react-icons/fa";
@@ -36,10 +37,11 @@ const FILTERS = [
 ];
 
 const Projects = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [filter, setFilter] = useState("all");
   const [selectedId, setSelectedId] = useState(PROJECTS[0].id);
-  // The project currently open in the play overlay, or null. Held as a url
-  // rather than a boolean so a second playable project needs no new state.
+  // The project currently open in the play overlay, or null. Holds the project
+  // itself so the overlay describes what is playing, not what is selected.
   const [playing, setPlaying] = useState(null);
 
   const activeFilter = FILTERS.find((f) => f.id === filter) || FILTERS[0];
@@ -62,16 +64,37 @@ const Projects = () => {
     }
   }, [filter, selectedId, visible]);
 
+  // Honour ?play=<id> on load so a demo can be linked to directly. Guarded on
+  // playUrl so a stale id is ignored rather than opening an empty overlay.
+  useEffect(() => {
+    const wanted = searchParams.get("play");
+    if (!wanted) return;
+    const target = PROJECTS.find((p) => p.id === wanted && p.playUrl);
+    if (!target) return;
+    setSelectedId(target.id);
+    setPlaying(target);
+  }, [searchParams]);
+
+  // Every close path routes through here, so the param never outlives the
+  // overlay and a refresh cannot reopen a game the visitor dismissed.
+  const closePlay = useCallback(() => {
+    setPlaying(null);
+    if (searchParams.has("play")) {
+      searchParams.delete("play");
+      setSearchParams(searchParams, { replace: true });
+    }
+  }, [searchParams, setSearchParams]);
+
   // Escape closes the demo. The overlay covers the whole page, so leaving the
   // keyboard without a way out would trap anyone not using a mouse.
   useEffect(() => {
     if (!playing) return undefined;
     const onKey = (e) => {
-      if (e.key === "Escape") setPlaying(null);
+      if (e.key === "Escape") closePlay();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [playing]);
+  }, [playing, closePlay]);
 
   return (
     <div className="projects">
@@ -235,7 +258,7 @@ const Projects = () => {
                 <button
                   type="button"
                   className="btn btn-primary"
-                  onClick={() => setPlaying(selected.playUrl)}
+                  onClick={() => setPlaying(selected)}
                 >
                   <span aria-hidden="true">▶</span> play now
                 </button>
@@ -274,18 +297,18 @@ const Projects = () => {
       {playing && (
         <div
           className="play-overlay"
-          onClick={() => setPlaying(null)}
+          onClick={closePlay}
           role="dialog"
           aria-modal="true"
-          aria-label={`${selected.name} — playable demo`}
+          aria-label={`${playing.name} — playable demo`}
         >
           <div className="play-shell" onClick={(e) => e.stopPropagation()}>
             <div className="play-bar">
-              <span className="play-path">~/projects/{selected.id} — running</span>
+              <span className="play-path">~/projects/{playing.id} — running</span>
               <button
                 type="button"
                 className="play-close"
-                onClick={() => setPlaying(null)}
+                onClick={closePlay}
                 aria-label="Close the demo"
               >
                 ×
@@ -293,7 +316,7 @@ const Projects = () => {
             </div>
             {/* The game is a separate document under public/, so it keeps its own
                 fonts, audio and localStorage without touching the portfolio. */}
-            <iframe src={playing} title={`${selected.name} demo`} />
+            <iframe src={playing.playUrl} title={`${playing.name} demo`} />
           </div>
         </div>
       )}

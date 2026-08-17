@@ -101,6 +101,15 @@ const Landing = () => {
                   ./resume.pdf
                 </button>
                 <button
+                  className="btn btn-play"
+                  type="button"
+                  onClick={() => navigate("/projects?play=card")}
+                >
+                  <span aria-hidden="true">▶</span>
+                  ./card --play
+                  <span className="btn-badge">new</span>
+                </button>
+                <button
                   className="btn btn-ghost"
                   type="button"
                   onClick={() => navigate("/projects")}
@@ -188,17 +197,40 @@ const Landing = () => {
             <p className="prompt muted">$ ls -l projects/ | head -3</p>
             <ul className="proj-list">
               {PROJECTS.map((p) => (
-                <li className="proj-row" key={p.name}>
+                <li
+                  className={`proj-row ${p.playable ? "is-playable" : ""}`}
+                  key={p.name}
+                >
                   <div className="proj-lead">
                     {p.image ? (
                       <img src={p.image} alt="" className="proj-thumb" />
                     ) : (
                       <span className="proj-thumb proj-thumb--empty" />
                     )}
-                    <h3 className="proj-name">{p.name}</h3>
+                    <div className="proj-id">
+                      <h3 className="proj-name">{p.name}</h3>
+                      {p.playable && (
+                        <span className="proj-live">
+                          <span className="proj-live-dot" aria-hidden="true" />
+                          playable here
+                        </span>
+                      )}
+                    </div>
                   </div>
                   <p className="proj-blurb">{p.blurb}</p>
-                  <p className="proj-tag">{p.tag}</p>
+                  {p.playable ? (
+                    <div className="proj-action">
+                      <button
+                        type="button"
+                        className="btn btn-primary btn-play-row"
+                        onClick={() => navigate("/projects?play=card")}
+                      >
+                        <span aria-hidden="true">▶</span> play now
+                      </button>
+                    </div>
+                  ) : (
+                    <p className="proj-tag">{p.tag}</p>
+                  )}
                 </li>
               ))}
             </ul>
