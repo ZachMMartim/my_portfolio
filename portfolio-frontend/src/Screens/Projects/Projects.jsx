@@ -1,9 +1,10 @@
 // Projects.jsx — split browser (direction 2a)
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { asset, assets } from "../../assets/assetMap";
 import PROJECT_DATA from "../../content/projects.json";
 import { FaGithub } from "react-icons/fa";
+import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 import AskBar from "../../components/AskBar/AskBar";
 import TermNav from "../../components/Navigation/TermNav";
 import "./Projects.css";
@@ -24,6 +25,23 @@ const PROJECTS = PROJECT_DATA.map((p) => ({
   video: asset(p.videoKey),
 }));
 
+/* The native Fullscreen API is enhancement only — iOS Safari does not offer it
+   for non-video elements, and the CSS mode already fills the viewport. Every
+   call is best-effort and failure is ignored. */
+const fullscreenElement = () =>
+  document.fullscreenElement || document.webkitFullscreenElement || null;
+
+const requestFullscreen = (el) => {
+  const fn = el?.requestFullscreen || el?.webkitRequestFullscreen;
+  if (fn) Promise.resolve(fn.call(el)).catch(() => {});
+};
+
+const exitFullscreen = () => {
+  if (!fullscreenElement()) return;
+  const fn = document.exitFullscreen || document.webkitExitFullscreen;
+  if (fn) Promise.resolve(fn.call(document)).catch(() => {});
+};
+
 const FILTERS = [
   { id: "all", label: "--all", test: () => true },
   {
@@ -43,6 +61,8 @@ const Projects = () => {
   // The project currently open in the play overlay, or null. Holds the project
   // itself so the overlay describes what is playing, not what is selected.
   const [playing, setPlaying] = useState(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const shellRef = useRef(null);
 
   const activeFilter = FILTERS.find((f) => f.id === filter) || FILTERS[0];
   const visible = PROJECTS.filter(activeFilter.test);
@@ -75,9 +95,52 @@ const Projects = () => {
     setPlaying(target);
   }, [searchParams]);
 
+  // Phones open fullscreen — the windowed shell is barely usable at that size.
+  // CSS only: requestFullscreen needs a gesture and this runs from an effect.
+  useEffect(() => {
+    if (!playing) return;
+    if (window.matchMedia?.("(max-width: 700px)").matches) setIsFullscreen(true);
+  }, [playing]);
+
+  // The visitor can leave fullscreen with F11 or the browser's own affordance,
+  // so the button's state follows the document rather than only our clicks.
+  useEffect(() => {
+    const sync = () => {
+      if (!fullscreenElement()) setIsFullscreen(false);
+    };
+    document.addEventListener("fullscreenchange", sync);
+    document.addEventListener("webkitfullscreenchange", sync);
+    return () => {
+      document.removeEventListener("fullscreenchange", sync);
+      document.removeEventListener("webkitfullscreenchange", sync);
+    };
+  }, []);
+
+  // The page behind would otherwise scroll under the overlay on touch.
+  useEffect(() => {
+    if (!playing) return undefined;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [playing]);
+
+  // This click is a real gesture, so it is the only place native fullscreen can
+  // be asked for.
+  const toggleFullscreen = useCallback(() => {
+    const next = !isFullscreen;
+    setIsFullscreen(next);
+    if (next) requestFullscreen(shellRef.current);
+    else exitFullscreen();
+  }, [isFullscreen]);
+
   // Every close path routes through here, so the param never outlives the
   // overlay and a refresh cannot reopen a game the visitor dismissed.
   const closePlay = useCallback(() => {
+    // Otherwise the browser stays fullscreen on the portfolio behind the game.
+    exitFullscreen();
+    setIsFullscreen(false);
     setPlaying(null);
     if (searchParams.has("play")) {
       searchParams.delete("play");
@@ -90,7 +153,11 @@ const Projects = () => {
   useEffect(() => {
     if (!playing) return undefined;
     const onKey = (e) => {
-      if (e.key === "Escape") closePlay();
+      if (e.key !== "Escape") return;
+      // In native fullscreen the browser already spends Escape on leaving it;
+      // closing here too would dismiss the game on that same press.
+      if (fullscreenElement()) return;
+      closePlay();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -296,23 +363,44 @@ const Projects = () => {
 
       {playing && (
         <div
-          className="play-overlay"
+          className={`play-overlay ${isFullscreen ? "is-fullscreen" : ""}`}
           onClick={closePlay}
           role="dialog"
           aria-modal="true"
           aria-label={`${playing.name} — playable demo`}
         >
-          <div className="play-shell" onClick={(e) => e.stopPropagation()}>
+          <div
+            ref={shellRef}
+            className={`play-shell ${isFullscreen ? "is-fullscreen" : ""}`}
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="play-bar">
               <span className="play-path">~/projects/{playing.id} — running</span>
-              <button
-                type="button"
-                className="play-close"
-                onClick={closePlay}
-                aria-label="Close the demo"
-              >
-                ×
-              </button>
+              <div className="play-actions">
+                <button
+                  type="button"
+                  className="play-fullscreen"
+                  onClick={toggleFullscreen}
+                  aria-pressed={isFullscreen}
+                  aria-label={
+                    isFullscreen ? "Leave fullscreen" : "Play fullscreen"
+                  }
+                >
+                  {isFullscreen ? (
+                    <MdFullscreenExit aria-hidden="true" />
+                  ) : (
+                    <MdFullscreen aria-hidden="true" />
+                  )}
+                </button>
+                <button
+                  type="button"
+                  className="play-close"
+                  onClick={closePlay}
+                  aria-label="Close the demo"
+                >
+                  ×
+                </button>
+              </div>
             </div>
             {/* The game is a separate document under public/, so it keeps its own
                 fonts, audio and localStorage without touching the portfolio. */}
