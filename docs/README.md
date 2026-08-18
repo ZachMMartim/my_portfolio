@@ -9,3 +9,4 @@ One file per decision, named after the thing it concerns.
 | Decision | Concerns |
 |---|---|
 | [askbar-markdown.md](decisions/askbar-markdown.md) | How the chat panel renders the assistant's markdown |
+| [card-fullscreen.md](decisions/card-fullscreen.md) | Fullscreen and scale-to-fit for the embedded Card game |

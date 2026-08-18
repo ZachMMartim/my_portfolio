@@ -25,6 +25,14 @@ const PROJECTS = PROJECT_DATA.map((p) => ({
   video: asset(p.videoKey),
 }));
 
+/* The game's own design box. Its shell frames it at this size on desktop and it
+   never reads window dimensions, so on a short phone the bottom row is clipped
+   rather than compressed. See docs/decisions/card-fullscreen.md. */
+const GAME_W = 430;
+const GAME_H = 932;
+
+const COMPACT = "(max-width: 700px)";
+
 /* The native Fullscreen API is enhancement only — iOS Safari does not offer it
    for non-video elements, and the CSS mode already fills the viewport. Every
    call is best-effort and failure is ignored. */
@@ -62,7 +70,10 @@ const Projects = () => {
   // itself so the overlay describes what is playing, not what is selected.
   const [playing, setPlaying] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isCompact, setIsCompact] = useState(false);
+  const [scale, setScale] = useState(1);
   const shellRef = useRef(null);
+  const stageRef = useRef(null);
 
   const activeFilter = FILTERS.find((f) => f.id === filter) || FILTERS[0];
   const visible = PROJECTS.filter(activeFilter.test);
@@ -95,11 +106,22 @@ const Projects = () => {
     setPlaying(target);
   }, [searchParams]);
 
+  // Tracked rather than read once, so a rotation re-fits instead of stranding
+  // the game at a scale computed for the other orientation.
+  useEffect(() => {
+    const mq = window.matchMedia?.(COMPACT);
+    if (!mq) return undefined;
+    setIsCompact(mq.matches);
+    const sync = (e) => setIsCompact(e.matches);
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
   // Phones open fullscreen — the windowed shell is barely usable at that size.
   // CSS only: requestFullscreen needs a gesture and this runs from an effect.
   useEffect(() => {
     if (!playing) return;
-    if (window.matchMedia?.("(max-width: 700px)").matches) setIsFullscreen(true);
+    if (window.matchMedia?.(COMPACT).matches) setIsFullscreen(true);
   }, [playing]);
 
   // The visitor can leave fullscreen with F11 or the browser's own affordance,
@@ -125,6 +147,28 @@ const Projects = () => {
       document.body.style.overflow = previous;
     };
   }, [playing]);
+
+  // Scaling the whole document down is the only fit that cannot clip the action
+  // row, because the game's layout is fixed and will not compress. Compact only:
+  // on a desktop the game already frames itself and needs no help.
+  const scaled = isFullscreen && isCompact;
+
+  useEffect(() => {
+    if (!playing || !scaled) return undefined;
+    const el = stageRef.current;
+    if (!el) return undefined;
+    const fit = () => {
+      const { width, height } = el.getBoundingClientRect();
+      if (!width || !height) return;
+      // Never above 1 — upscaling a 1.7MB canvas game only makes it blurry.
+      setScale(Math.min(width / GAME_W, height / GAME_H, 1));
+    };
+    fit();
+    if (typeof ResizeObserver === "undefined") return undefined;
+    const ro = new ResizeObserver(fit);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [playing, scaled]);
 
   // This click is a real gesture, so it is the only place native fullscreen can
   // be asked for.
@@ -404,7 +448,21 @@ const Projects = () => {
             </div>
             {/* The game is a separate document under public/, so it keeps its own
                 fonts, audio and localStorage without touching the portfolio. */}
-            <iframe src={playing.playUrl} title={`${playing.name} demo`} />
+            <div className="play-stage" ref={stageRef}>
+              <iframe
+                src={playing.playUrl}
+                title={`${playing.name} demo`}
+                style={
+                  scaled
+                    ? {
+                        width: `${GAME_W}px`,
+                        height: `${GAME_H}px`,
+                        transform: `scale(${scale})`,
+                      }
+                    : undefined
+                }
+              />
+            </div>
           </div>
         </div>
       )}
